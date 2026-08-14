@@ -71,3 +71,14 @@ Risk ใช้ Current Score + pending/overdue + deadline proximity + submission
 
 ## หมายเหตุสำคัญ
 LINE Messaging API จะส่งข้อความจริงได้เมื่อ `.env` มี credential ที่ถูกต้องและ parent connection มี `lineUserId` ที่ได้รับจาก LINE webhook เท่านั้น หากไม่มี credential ระบบจะแจ้ง error และไม่อ้างว่าส่งจริง
+
+
+## Prototype update — Assignment Files & Notification Settings
+
+- ครูสามารถแนบไฟล์โจทย์/เอกสารประกอบตอนสร้างหรือแก้ไข Assignment
+- นักเรียนเปิด/ดาวน์โหลดไฟล์โจทย์จากหน้า Assignment ได้
+- ครูเปิด/ดาวน์โหลดไฟล์ที่นักเรียนส่งจากหน้า ตรวจงาน ได้
+- นักเรียนเปิด/ดาวน์โหลดไฟล์ที่ตัวเองส่งจากหน้า ดูผล ได้
+- ฝั่งครูแสดงคะแนนเต็มของแต่ละ Submission ชัดเจน
+- เพิ่มสวิตช์เปิด/ปิดการแจ้งเตือนทั้ง Student และ Teacher พร้อมบันทึกค่าใน Shared Data Store
+- Session ใช้ sessionStorage เพื่อแยก Student/Teacher คนละแท็บใน Browser เดียวกัน

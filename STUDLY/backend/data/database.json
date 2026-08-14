@@ -1,23 +1,141 @@
 {
-  "users":[
-    {"id":"stu-001","role":"student","name":"สมชาย ใจดี","email":"student@demo.ac.th","password":"studentdemo","studentId":"65000001","school":"โรงเรียนสาธิต STUDLY","classroom":"ม.6/1","gradeLevel":"มัธยมศึกษาปีที่ 6","lineConnected":false,"lineUserId":null},
-    {"id":"tea-001","role":"teacher","name":"อาจารย์สมศรี","email":"teacher@demo.ac.th","password":"teacherdemo","teacherId":"T001","school":"โรงเรียนสาธิต STUDLY","department":"วิทยาศาสตร์และเทคโนโลยี","subjectsTaught":["Physics","Programming","Mathematics","English"]}
+  "users": [
+    {
+      "id": "stu-001",
+      "role": "student",
+      "name": "สมชาย ใจดี",
+      "email": "student@demo.ac.th",
+      "password": "studentdemo",
+      "studentId": "65000001",
+      "school": "โรงเรียนสาธิต STUDLY",
+      "classroom": "ม.6/1",
+      "gradeLevel": "มัธยมศึกษาปีที่ 6",
+      "lineConnected": false,
+      "lineUserId": null,
+      "notificationSettings": {
+        "newAssignment": true,
+        "deadlineNear": true,
+        "overdue": true,
+        "aiRecommendation": true,
+        "teacherGraded": true
+      }
+    },
+    {
+      "id": "tea-001",
+      "role": "teacher",
+      "name": "อาจารย์สมศรี",
+      "email": "teacher@demo.ac.th",
+      "password": "teacherdemo",
+      "teacherId": "T001",
+      "school": "โรงเรียนสาธิต STUDLY",
+      "department": "วิทยาศาสตร์และเทคโนโลยี",
+      "subjectsTaught": [
+        "Physics",
+        "Programming",
+        "Mathematics",
+        "English"
+      ],
+      "notificationSettings": {
+        "newSubmission": true,
+        "pendingReview": true,
+        "studentRiskHigh": true,
+        "assignmentDeadline": true
+      }
+    }
   ],
-  "subjects":[
-    {"id":"sub-physics","name":"Physics","score":42,"risk":"HIGH"},
-    {"id":"sub-programming","name":"Programming","score":72,"risk":"MEDIUM"},
-    {"id":"sub-math","name":"Mathematics","score":78,"risk":"LOW"},
-    {"id":"sub-english","name":"English","score":85,"risk":"LOW"}
+  "subjects": [
+    {
+      "id": "sub-physics",
+      "name": "Physics",
+      "score": 42,
+      "risk": "HIGH"
+    },
+    {
+      "id": "sub-programming",
+      "name": "Programming",
+      "score": 72,
+      "risk": "MEDIUM"
+    },
+    {
+      "id": "sub-math",
+      "name": "Mathematics",
+      "score": 78,
+      "risk": "LOW"
+    },
+    {
+      "id": "sub-english",
+      "name": "English",
+      "score": 85,
+      "risk": "LOW"
+    }
   ],
-  "assignments":[
-    {"id":"a-physics","title":"Physics Lab #3","description":"วิเคราะห์การทดลองและสรุปผล","subject":"Physics","deadline":"2026-08-15T23:59:00+07:00","maxScore":30,"weight":20,"difficulty":"ยาก","estimatedTime":90,"type":"Online","assignedStudents":["stu-001"]},
-    {"id":"a-prog","title":"Programming Assignment #2","description":"สร้างโปรแกรมจัดการข้อมูลนักเรียน","subject":"Programming","deadline":"2026-08-15T23:59:00+07:00","maxScore":20,"weight":15,"difficulty":"ปานกลาง","estimatedTime":60,"type":"Online","assignedStudents":["stu-001"]},
-    {"id":"a-math","title":"Mathematics Exercise","description":"แบบฝึกหัดแคลคูลัสชุดที่ 4","subject":"Mathematics","deadline":"2026-08-15T23:59:00+07:00","maxScore":10,"weight":10,"difficulty":"ง่าย","estimatedTime":30,"type":"Offline","offlineCode":"583214","assignedStudents":["stu-001"]},
-    {"id":"a-eng","title":"English Exercise","description":"Reading comprehension","subject":"English","deadline":"2026-08-17T23:59:00+07:00","maxScore":5,"weight":5,"difficulty":"ง่าย","estimatedTime":30,"type":"Offline","offlineCode":"417205","assignedStudents":["stu-001"]}
+  "assignments": [
+    {
+      "id": "a-physics",
+      "title": "Physics Lab #3",
+      "description": "วิเคราะห์การทดลองและสรุปผล",
+      "subject": "Physics",
+      "deadline": "2026-08-15T23:59:00+07:00",
+      "maxScore": 30,
+      "weight": 20,
+      "difficulty": "ยาก",
+      "estimatedTime": 90,
+      "type": "Online",
+      "assignedStudents": [
+        "stu-001"
+      ]
+    },
+    {
+      "id": "a-prog",
+      "title": "Programming Assignment #2",
+      "description": "สร้างโปรแกรมจัดการข้อมูลนักเรียน",
+      "subject": "Programming",
+      "deadline": "2026-08-15T23:59:00+07:00",
+      "maxScore": 20,
+      "weight": 15,
+      "difficulty": "ปานกลาง",
+      "estimatedTime": 60,
+      "type": "Online",
+      "assignedStudents": [
+        "stu-001"
+      ]
+    },
+    {
+      "id": "a-math",
+      "title": "Mathematics Exercise",
+      "description": "แบบฝึกหัดแคลคูลัสชุดที่ 4",
+      "subject": "Mathematics",
+      "deadline": "2026-08-15T23:59:00+07:00",
+      "maxScore": 10,
+      "weight": 10,
+      "difficulty": "ง่าย",
+      "estimatedTime": 30,
+      "type": "Offline",
+      "offlineCode": "583214",
+      "assignedStudents": [
+        "stu-001"
+      ]
+    },
+    {
+      "id": "a-eng",
+      "title": "English Exercise",
+      "description": "Reading comprehension",
+      "subject": "English",
+      "deadline": "2026-08-17T23:59:00+07:00",
+      "maxScore": 5,
+      "weight": 5,
+      "difficulty": "ง่าย",
+      "estimatedTime": 30,
+      "type": "Offline",
+      "offlineCode": "417205",
+      "assignedStudents": [
+        "stu-001"
+      ]
+    }
   ],
-  "submissions":[],
-  "scores":[],
-  "notifications":[],
-  "parentConnections":[],
-  "linkCodes":[]
+  "submissions": [],
+  "scores": [],
+  "notifications": [],
+  "parentConnections": [],
+  "linkCodes": []
 }
