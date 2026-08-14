@@ -47,7 +47,7 @@ button{
     radial-gradient(circle at 15% 20%,#ddd6fe,transparent 35%),
     radial-gradient(circle at 85% 80%,#bfdbfe,transparent 30%),
     #f8fafc;
-  padding:24px;
+  padding:24px
 }
 
 .login-card{
@@ -61,9 +61,13 @@ button{
   grid-template-columns:1fr 1fr;
   text-align:left;
   position:relative;
+  padding:0
 }
 
-/* ฝั่งฟอร์ม */
+/* =========================
+   RIGHT SIDE BACKGROUND
+   ไม่มี logo ซ้ำ
+========================= */
 
 .login-card::before{
   content:'';
@@ -73,18 +77,44 @@ button{
   bottom:0;
   width:50%;
   background:
-    linear-gradient(135deg,#3b0764aa,#111827dd),
-    url("../assets/logo.png") center/cover no-repeat;
-  z-index:0;
+    linear-gradient(
+      135deg,
+      #32105f 0%,
+      #24104b 45%,
+      #111827 100%
+    );
+  z-index:0
 }
+
+.login-card::after{
+  content:'';
+  position:absolute;
+  left:50%;
+  top:0;
+  width:50%;
+  height:100%;
+  background:
+    radial-gradient(
+      circle at 70% 30%,
+      #7c3aed55,
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 30% 75%,
+      #2563eb35,
+      transparent 35%
+    );
+  z-index:0;
+  pointer-events:none
+}
+
+/* =========================
+   LOGIN CONTENT
+========================= */
 
 .login-card > *{
   position:relative;
-  z-index:1;
-}
-
-.login-card{
-  padding:0;
+  z-index:1
 }
 
 .login-card form,
@@ -96,51 +126,53 @@ button{
   width:50%;
   margin-left:0;
   padding-left:48px;
-  padding-right:48px;
+  padding-right:48px
 }
 
-/* Logo */
+/* =========================
+   LOGO
+========================= */
 
 .logo-mark{
-  padding-top:60px;
+  padding-top:35px;
   margin-bottom:8px;
   height:auto;
   background:none;
   color:transparent;
   font-size:0;
-  display:block;
+  display:block
 }
 
 .logo-mark::before{
   content:'';
   display:block;
-  width:110px;
-  height:110px;
-  background:url("../assets/logo.png") center/contain no-repeat;
+  width:72px;
+  height:72px;
+  background:url("../assets/logo.png") center/contain no-repeat
 }
 
-/* STUDLY */
+/* =========================
+   LOGIN TITLE
+========================= */
 
 .login-card h1{
   margin-top:0;
   margin-bottom:4px;
   font-size:34px;
   font-weight:900;
-  color:#111827;
+  color:#111827
 }
 
 .login-card > p{
   margin-top:0;
   margin-bottom:25px;
   color:var(--muted);
-  font-size:15px;
+  font-size:15px
 }
 
-/* Form */
-
-.login-card form{
-  display:block;
-}
+/* =========================
+   FORM
+========================= */
 
 label{
   text-align:left;
@@ -174,9 +206,18 @@ textarea:focus{
   padding:13px;
   border-radius:13px;
   color:#fff;
-  background:linear-gradient(135deg,var(--primary),var(--purple));
+  background:linear-gradient(
+    135deg,
+    var(--primary),
+    var(--purple)
+  );
   font-weight:800;
   margin-top:8px
+}
+
+.primary:hover{
+  opacity:.92;
+  transform:translateY(-1px)
 }
 
 .demo-hint{
@@ -194,7 +235,7 @@ textarea:focus{
 .toast{
   min-height:20px;
   color:var(--red);
-  font-size:13px;
+  font-size:13px
 }
 
 /* =========================
@@ -428,7 +469,11 @@ textarea:focus{
 }
 
 .ai-card{
-  background:linear-gradient(135deg,#eef2ff,#faf5ff)
+  background:linear-gradient(
+    135deg,
+    #eef2ff,
+    #faf5ff
+  )
 }
 
 .priority{
@@ -504,7 +549,7 @@ textarea:focus{
 }
 
 /* =========================
-   RESPONSIVE
+   TABLET
 ========================= */
 
 @media(max-width:900px){
@@ -512,11 +557,12 @@ textarea:focus{
   .login-card{
     width:min(500px,94vw);
     grid-template-columns:1fr;
-    min-height:auto;
+    min-height:auto
   }
 
-  .login-card::before{
-    display:none;
+  .login-card::before,
+  .login-card::after{
+    display:none
   }
 
   .login-card form,
@@ -527,11 +573,11 @@ textarea:focus{
   .login-card .logo-mark{
     width:100%;
     padding-left:40px;
-    padding-right:40px;
+    padding-right:40px
   }
 
   .logo-mark{
-    padding-top:40px;
+    padding-top:40px
   }
 
   .sidebar{
@@ -564,6 +610,10 @@ textarea:focus{
   }
 }
 
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:600px){
 
   .cards,
@@ -578,7 +628,7 @@ textarea:focus{
   }
 
   .login-card{
-    border-radius:22px;
+    border-radius:22px
   }
 
   .login-card form,
@@ -588,11 +638,11 @@ textarea:focus{
   .login-card > p,
   .login-card .logo-mark{
     padding-left:28px;
-    padding-right:28px;
+    padding-right:28px
   }
 
   .logo-mark::before{
-    width:90px;
-    height:90px;
+    width:64px;
+    height:64px
   }
 }
