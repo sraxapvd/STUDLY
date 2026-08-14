@@ -50,10 +50,8 @@ button{
 
 .login-bg{
   min-height:100vh;
-
   display:grid;
   place-items:center;
-
   padding:20px;
 
   background:
@@ -70,23 +68,12 @@ button{
     #f8fafc;
 }
 
-
-/* =========================================================
-   LOGIN CARD
-========================================================= */
-
 .login-card{
   width:min(430px,92vw);
-
   background:#fff;
-
   border-radius:28px;
-
   padding:40px;
-
-  box-shadow:
-    0 24px 70px rgba(49,46,129,.12);
-
+  box-shadow:0 24px 70px #312e811f;
   text-align:center;
 }
 
@@ -96,45 +83,21 @@ button{
 ========================================================= */
 
 .logo-image{
-  width:110px;
-  height:110px;
-
-  object-fit:cover;
-
+  width:72px;
+  height:72px;
+  object-fit:contain;
   display:block;
-
-  margin:0 auto 16px;
-
-  border-radius:26px;
+  margin:0 auto 12px;
+  border-radius:20px;
 
   box-shadow:
-    0 12px 30px rgba(49,46,129,.25);
-
-  background:#fff;
-
-  transition:
-    transform .2s ease,
-    box-shadow .2s ease;
+    0 10px 25px #11182726;
 }
-
-.logo-image:hover{
-  transform:translateY(-2px);
-
-  box-shadow:
-    0 16px 38px rgba(49,46,129,.30);
-}
-
-
-/*
-  กรณีมีโลโก้แบบ .logo-mark
-*/
 
 .logo-mark{
   margin:auto;
-
   width:48px;
   height:48px;
-
   border-radius:14px;
 
   background:
@@ -145,7 +108,6 @@ button{
     );
 
   color:white;
-
   font-size:26px;
   font-weight:900;
 
@@ -158,20 +120,13 @@ button{
   margin-left:-4px;
 }
 
-
-/* =========================================================
-   LOGIN TITLE
-========================================================= */
-
 .login-card h1{
   margin:10px 0 0;
-
   font-size:34px;
 }
 
 .login-card>p{
   margin:2px 0 28px;
-
   color:var(--muted);
 }
 
@@ -182,13 +137,9 @@ button{
 
 label{
   text-align:left;
-
   display:block;
-
   font-size:13px;
-
   font-weight:700;
-
   margin:14px 0;
 }
 
@@ -196,17 +147,14 @@ input,
 select,
 textarea{
   width:100%;
-
   padding:12px 14px;
 
   border:1px solid #e5e7eb;
-
   border-radius:12px;
 
   margin-top:7px;
 
   background:#fff;
-
   outline:none;
 }
 
@@ -219,14 +167,8 @@ textarea:focus{
     0 0 0 3px #6366f11a;
 }
 
-
-/* =========================================================
-   LOGIN BUTTON
-========================================================= */
-
 .primary{
   width:100%;
-
   padding:13px;
 
   border-radius:13px;
@@ -241,24 +183,13 @@ textarea:focus{
     );
 
   font-weight:800;
-
   margin-top:8px;
-
-  transition:
-    transform .2s ease,
-    opacity .2s ease;
 }
 
 .primary:hover{
   opacity:.95;
-
   transform:translateY(-1px);
 }
-
-
-/* =========================================================
-   DEMO ACCOUNT
-========================================================= */
 
 .demo-hint{
   margin-top:20px;
@@ -278,9 +209,7 @@ textarea:focus{
 
 .toast{
   min-height:20px;
-
   color:var(--red);
-
   font-size:13px;
 }
 
@@ -291,63 +220,41 @@ textarea:focus{
 
 .shell{
   display:flex;
-
   min-height:100vh;
-
   width:100%;
-
-  min-width:0;
 }
 
 
 /* =========================================================
-   SIDEBAR
-   DESKTOP DEFAULT
+   DESKTOP SIDEBAR
 ========================================================= */
 
 .sidebar{
   width:250px;
-
   min-width:250px;
 
   background:#111827;
-
   color:white;
 
   padding:24px;
 
   position:fixed;
 
-  inset:0 auto 0 0;
+  top:0;
+  left:0;
+  bottom:0;
 
   overflow-y:auto;
 
-  overflow-x:hidden;
-
   z-index:1000;
 
-  transform:none;
-
   transition:
-    transform .28s ease;
-
-  box-shadow:
-    4px 0 20px rgba(15,23,42,.08);
+    transform .25s ease;
 }
-
-
-/* =========================================================
-   BRAND
-========================================================= */
 
 .brand{
   font-weight:900;
-
   font-size:24px;
-
-  color:#fff;
-
-  white-space:nowrap;
 }
 
 .brand small{
@@ -356,16 +263,10 @@ textarea:focus{
   color:#a5b4fc;
 
   font-size:11px;
-
   font-weight:600;
 
   margin-top:2px;
 }
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
 
 .nav{
   margin-top:30px;
@@ -373,8 +274,6 @@ textarea:focus{
   display:grid;
 
   gap:8px;
-
-  width:100%;
 }
 
 .nav button{
@@ -389,37 +288,12 @@ textarea:focus{
   border-radius:12px;
 
   width:100%;
-
-  min-height:44px;
-
-  display:block;
-
-  white-space:normal;
-
-  transition:
-    background .2s ease,
-    color .2s ease;
 }
 
 .nav button.active,
 .nav button:hover{
   background:#ffffff14;
-
   color:#fff;
-}
-
-
-/*
-  สำคัญ:
-  ไม่ซ่อนข้อความเมนู
-*/
-
-.nav button span{
-  display:inline !important;
-
-  visibility:visible !important;
-
-  opacity:1 !important;
 }
 
 
@@ -437,11 +311,6 @@ textarea:focus{
   padding:28px;
 }
 
-
-/* =========================================================
-   TOPBAR
-========================================================= */
-
 .topbar{
   display:flex;
 
@@ -449,17 +318,13 @@ textarea:focus{
 
   align-items:center;
 
-  gap:16px;
-
   margin-bottom:24px;
 
-  min-width:0;
+  gap:16px;
 }
 
 .topbar h2{
   margin:0;
-
-  font-size:28px;
 }
 
 .user-pill{
@@ -474,7 +339,83 @@ textarea:focus{
   box-shadow:
     0 4px 18px #1118270b;
 
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
   white-space:nowrap;
+}
+
+
+/* =========================================================
+   MOBILE MENU BUTTON
+   Desktop = ซ่อน
+========================================================= */
+
+.menu-toggle{
+  display:none;
+
+  position:fixed;
+
+  top:16px;
+  left:16px;
+
+  width:48px;
+  height:48px;
+
+  align-items:center;
+  justify-content:center;
+
+  border-radius:14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #4f46e5,
+      #2563eb
+    );
+
+  color:#fff;
+
+  font-size:25px;
+
+  font-weight:900;
+
+  box-shadow:
+    0 8px 24px #4f46e566;
+
+  z-index:1101;
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+.menu-toggle:hover{
+  transform:translateY(-1px);
+
+  box-shadow:
+    0 10px 28px #4f46e577;
+}
+
+
+/* =========================================================
+   SIDEBAR OVERLAY
+   Desktop = ซ่อน
+========================================================= */
+
+.sidebar-overlay{
+  display:none;
+
+  position:fixed;
+
+  inset:0;
+
+  background:#0f172a80;
+
+  z-index:999;
 }
 
 
@@ -484,22 +425,17 @@ textarea:focus{
 
 .grid{
   display:grid;
-
   gap:16px;
-
-  width:100%;
-
-  min-width:0;
 }
 
 .stats{
   grid-template-columns:
-    repeat(4,minmax(0,1fr));
+    repeat(4,1fr);
 }
 
 .cards{
   grid-template-columns:
-    repeat(2,minmax(0,1fr));
+    repeat(2,1fr);
 }
 
 
@@ -520,8 +456,6 @@ textarea:focus{
   border:1px solid #eef0f5;
 
   min-width:0;
-
-  overflow:hidden;
 }
 
 .stat .num{
@@ -553,37 +487,30 @@ textarea:focus{
   font-size:11px;
 
   font-weight:800;
-
-  white-space:nowrap;
 }
 
 .b-green{
   background:#dcfce7;
-
   color:#166534;
 }
 
 .b-blue{
   background:#dbeafe;
-
   color:#1d4ed8;
 }
 
 .b-yellow{
   background:#fef3c7;
-
   color:#92400e;
 }
 
 .b-red{
   background:#fee2e2;
-
   color:#991b1b;
 }
 
 .b-gray{
   background:#e5e7eb;
-
   color:#374151;
 }
 
@@ -600,8 +527,6 @@ textarea:focus{
   justify-content:space-between;
 
   gap:12px;
-
-  min-width:0;
 }
 
 
@@ -610,11 +535,8 @@ textarea:focus{
 ========================================================= */
 
 .table-wrap{
-  width:100%;
-
   overflow-x:auto;
-
-  -webkit-overflow-scrolling:touch;
+  width:100%;
 }
 
 .table{
@@ -623,15 +545,14 @@ textarea:focus{
   border-collapse:collapse;
 
   font-size:13px;
-
-  min-width:700px;
 }
 
 .table th,
 .table td{
   padding:12px;
 
-  border-bottom:1px solid #eef0f5;
+  border-bottom:
+    1px solid #eef0f5;
 
   text-align:left;
 
@@ -663,33 +584,24 @@ textarea:focus{
   font-weight:700;
 
   font-size:12px;
-
-  transition:
-    opacity .2s ease,
-    transform .2s ease;
 }
 
 .btn:hover{
   opacity:.9;
-
-  transform:translateY(-1px);
 }
 
 .btn.green{
   background:#dcfce7;
-
   color:#166534;
 }
 
 .btn.red{
   background:#fee2e2;
-
   color:#991b1b;
 }
 
 .btn.gray{
   background:#f1f5f9;
-
   color:#475569;
 }
 
@@ -724,7 +636,7 @@ textarea:focus{
 
   padding:20px;
 
-  z-index:2000;
+  z-index:1200;
 }
 
 .modal{
@@ -793,7 +705,8 @@ textarea:focus{
 
   padding:13px 0;
 
-  border-bottom:1px solid #eef0f5;
+  border-bottom:
+    1px solid #eef0f5;
 
   font-size:14px;
 
@@ -845,7 +758,8 @@ textarea:focus{
 
   border-radius:50%;
 
-  box-shadow:0 1px 3px #0002;
+  box-shadow:
+    0 1px 3px #0002;
 
   transition:.2s;
 }
@@ -868,311 +782,134 @@ textarea:focus{
 
 
 /* =========================================================
-   MOBILE MENU BUTTON
-   ค่าเริ่มต้น = ซ่อน
-========================================================= */
-
-.menu-toggle{
-  display:none;
-
-  position:fixed;
-
-  top:16px;
-
-  left:16px;
-
-  width:44px;
-
-  height:44px;
-
-  border:0;
-
-  border-radius:12px;
-
-  background:#111827;
-
-  color:#fff;
-
-  font-size:24px;
-
-  line-height:1;
-
-  align-items:center;
-
-  justify-content:center;
-
-  cursor:pointer;
-
-  z-index:1100;
-
-  box-shadow:
-    0 8px 24px rgba(15,23,42,.22);
-}
-
-
-/* =========================================================
-   SIDEBAR OVERLAY
-========================================================= */
-
-.sidebar-overlay{
-  display:none;
-
-  position:fixed;
-
-  inset:0;
-
-  background:rgba(15,23,42,.48);
-
-  z-index:999;
-
-  opacity:0;
-
-  visibility:hidden;
-
-  pointer-events:none;
-
-  transition:
-    opacity .28s ease,
-    visibility .28s ease;
-}
-
-
-/* =========================================================
-   DESKTOP
-   > 900px
-========================================================= */
-
-@media(min-width:901px){
-
-  .menu-toggle{
-    display:none !important;
-  }
-
-  .sidebar-overlay{
-    display:none !important;
-  }
-
-  .sidebar{
-    position:fixed;
-
-    left:0;
-    top:0;
-    bottom:0;
-
-    width:250px;
-
-    min-width:250px;
-
-    transform:none;
-
-    z-index:1000;
-  }
-
-  .main{
-    margin-left:250px;
-
-    width:calc(100% - 250px);
-
-    padding:28px;
-  }
-
-}
-
-
-/* =========================================================
-   TABLET / IPAD / MOBILE
+   TABLET / MOBILE
    <= 900px
 ========================================================= */
 
 @media(max-width:900px){
 
-  /*
-    แสดงปุ่ม ☰
-  */
+  /* -----------------------------------------
+     Mobile menu button
+  ----------------------------------------- */
 
   .menu-toggle{
     display:flex;
   }
 
 
-  /*
-    Sidebar ซ่อนออกไปทางซ้าย
-  */
+  /* -----------------------------------------
+     Sidebar
+     ซ่อนออกด้านซ้าย
+  ----------------------------------------- */
 
   .sidebar{
-    position:fixed;
-
-    left:0;
-    top:0;
-    bottom:0;
-
     width:280px;
 
     min-width:280px;
 
     padding:24px;
 
-    overflow-y:auto;
-
-    overflow-x:hidden;
-
-    background:#111827;
-
-    z-index:1001;
-
-    transform:translateX(-100%);
-
-    transition:
-      transform .28s ease;
+    transform:
+      translateX(-100%);
 
     box-shadow:
-      12px 0 35px rgba(0,0,0,.18);
+      12px 0 35px #00000026;
   }
 
 
-  /*
-    เมื่อเปิด Sidebar
-  */
+  /* -----------------------------------------
+     เปิด Sidebar
+  ----------------------------------------- */
 
   body.sidebar-open .sidebar{
-    transform:translateX(0);
+    transform:
+      translateX(0);
   }
 
 
-  /*
-    เปิด Overlay
-  */
+  /* -----------------------------------------
+     Overlay
+  ----------------------------------------- */
 
   body.sidebar-open .sidebar-overlay{
     display:block;
-
-    opacity:1;
-
-    visibility:visible;
-
-    pointer-events:auto;
   }
 
 
-  /*
-    Brand ต้องแสดง
-  */
+  /* -----------------------------------------
+     Main
+  ----------------------------------------- */
+
+  .main{
+    margin-left:0;
+
+    width:100%;
+
+    padding:
+      82px
+      18px
+      24px;
+  }
+
+
+  /* -----------------------------------------
+     Brand
+  ----------------------------------------- */
 
   .brand{
-    display:block !important;
+    font-size:24px;
+  }
 
-    font-size:24px !important;
-
-    font-weight:900;
-
-    color:#fff;
-
-    white-space:nowrap;
+  .brand:before{
+    display:none;
   }
 
   .brand small{
-    display:block !important;
-
-    font-size:11px !important;
-
-    color:#a5b4fc;
-
-    margin-top:2px;
+    display:block;
   }
 
 
-  /*
-    Navigation ต้องแสดงทั้งหมด
-  */
-
-  .nav{
-    display:grid !important;
-
-    gap:8px;
-
-    margin-top:30px;
-
-    width:100%;
-  }
+  /* -----------------------------------------
+     Navigation
+  ----------------------------------------- */
 
   .nav button{
-    display:block !important;
+    padding:13px 14px;
 
-    width:100%;
-
-    min-height:44px;
-
-    padding:12px;
-
-    color:#cbd5e1;
-
-    background:transparent;
-
-    text-align:left;
-
-    border-radius:12px;
+    font-size:14px;
   }
 
+  .brand small,
   .nav button span{
-    display:inline !important;
-
-    visibility:visible !important;
-
-    opacity:1 !important;
+    display:block;
   }
 
 
-  /*
-    Main เต็มพื้นที่
-  */
-
-  .main{
-    margin-left:0 !important;
-
-    width:100% !important;
-
-    min-width:0;
-
-    padding:20px;
-  }
-
-
-  /*
-    กันหน้าจอล้นด้านข้าง
-  */
-
-  body{
-    overflow-x:hidden;
-  }
-
-  .shell{
-    width:100%;
-
-    min-width:0;
-  }
-
-
-  /*
-    เว้นพื้นที่ให้ปุ่ม ☰
-  */
-
-  .topbar{
-    padding-left:56px;
-  }
-
-
-  /*
-    Tablet
-  */
+  /* -----------------------------------------
+     Grid
+  ----------------------------------------- */
 
   .stats{
     grid-template-columns:
-      repeat(2,minmax(0,1fr));
+      repeat(2,1fr);
   }
 
   .cards{
     grid-template-columns:
-      repeat(2,minmax(0,1fr));
+      repeat(2,1fr);
+  }
+
+
+  /* -----------------------------------------
+     Topbar
+  ----------------------------------------- */
+
+  .topbar{
+    align-items:flex-start;
+  }
+
+  .user-pill{
+    white-space:normal;
   }
 
 }
@@ -1185,83 +922,27 @@ textarea:focus{
 
 @media(max-width:600px){
 
-  .menu-toggle{
-    top:12px;
-
-    left:12px;
-
-    width:42px;
-
-    height:42px;
-
-    font-size:22px;
-
-    border-radius:11px;
-  }
-
-
-  .sidebar{
-    width:min(280px,82vw);
-
-    min-width:min(280px,82vw);
-
-    padding:22px 18px;
-  }
-
-
-  .main{
-    padding:16px;
-
-    width:100%;
-  }
-
-
-  .topbar{
-    padding-left:54px;
-
-    align-items:flex-start;
-
-    gap:12px;
-
-    flex-direction:column;
-
-    width:100%;
-  }
-
-
-  .topbar h2{
-    font-size:24px;
-  }
-
-
-  .user-pill{
-    max-width:100%;
-
-    white-space:normal;
-  }
-
-
-  .stats,
-  .cards{
+  .cards,
+  .stats{
     grid-template-columns:1fr;
   }
 
 
-  .card{
-    width:100%;
+  .topbar{
+    flex-direction:column;
 
-    min-width:0;
+    align-items:flex-start;
 
-    overflow:hidden;
+    gap:10px;
   }
 
 
-  .table-wrap{
+  .user-pill{
     width:100%;
 
-    overflow-x:auto;
+    justify-content:space-between;
 
-    -webkit-overflow-scrolling:touch;
+    border-radius:14px;
   }
 
 
@@ -1269,17 +950,12 @@ textarea:focus{
     width:min(430px,94vw);
 
     padding:30px 24px;
-
-    border-radius:24px;
   }
 
 
   .logo-image{
-    width:100px;
-
-    height:100px;
-
-    border-radius:24px;
+    width:72px;
+    height:72px;
   }
 
 
@@ -1287,65 +963,63 @@ textarea:focus{
     font-size:30px;
   }
 
-}
-
-
-/* =========================================================
-   IPAD / TABLET
-   601px - 900px
-========================================================= */
-
-@media(min-width:601px) and (max-width:900px){
 
   .main{
-    padding:24px;
+    padding:
+      82px
+      14px
+      20px;
   }
 
 
-  .topbar{
-    padding-left:60px;
+  .card{
+    padding:16px;
+
+    border-radius:16px;
   }
 
 
-  .sidebar{
-    width:280px;
+  .row{
+    align-items:flex-start;
+  }
 
-    min-width:280px;
+
+  .table{
+    min-width:700px;
   }
 
 }
 
 
 /* =========================================================
-   SMALL MOBILE
+   VERY SMALL MOBILE
    <= 380px
 ========================================================= */
 
 @media(max-width:380px){
 
-  .sidebar{
-    width:82vw;
+  .menu-toggle{
+    width:44px;
+    height:44px;
 
-    min-width:82vw;
+    top:12px;
+    left:12px;
+
+    font-size:23px;
   }
 
 
   .main{
-    padding:12px;
+    padding:
+      70px
+      12px
+      18px;
   }
 
 
-  .topbar{
-    padding-left:52px;
-  }
-
-
-  .logo-image{
-    width:90px;
-
-    height:90px;
-
-    border-radius:22px;
+  .sidebar{
+    width:270px;
+    min-width:270px;
   }
 
 }
