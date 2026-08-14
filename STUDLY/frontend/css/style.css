@@ -16,19 +16,11 @@
   box-sizing:border-box;
 }
 
-html,
 body{
   margin:0;
-  padding:0;
-  width:100%;
-  min-height:100%;
-}
-
-body{
   font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
   background:var(--bg);
   color:var(--text);
-  overflow-x:hidden;
 }
 
 button,
@@ -44,9 +36,9 @@ button{
 }
 
 
-/* =========================================================
+/* =========================
    LOGIN
-========================================================= */
+========================= */
 
 .login-bg{
   min-height:100vh;
@@ -68,36 +60,58 @@ button{
     #f8fafc;
 }
 
+
+/* =========================
+   LOGIN CARD
+========================= */
+
 .login-card{
   width:min(430px,92vw);
+
   background:#fff;
+
   border-radius:28px;
+
   padding:40px;
-  box-shadow:0 24px 70px #312e811f;
+
+  box-shadow:
+    0 24px 70px #312e811f;
+
   text-align:center;
 }
 
 
-/* =========================================================
+/* =========================
    LOGIN LOGO
-========================================================= */
+========================= */
 
 .logo-image{
-  width:72px;
-  height:72px;
+  width:85px;
+  height:85px;
+
   object-fit:contain;
+
   display:block;
-  margin:0 auto 12px;
-  border-radius:20px;
+
+  margin:0 auto 14px;
+
+  border-radius:22px;
 
   box-shadow:
-    0 10px 25px #11182726;
+    0 10px 25px #312e8130;
 }
+
+
+/* =========================
+   OLD LOGO SUPPORT
+========================= */
 
 .logo-mark{
   margin:auto;
+
   width:48px;
   height:48px;
+
   border-radius:14px;
 
   background:
@@ -108,6 +122,7 @@ button{
     );
 
   color:white;
+
   font-size:26px;
   font-weight:900;
 
@@ -120,26 +135,36 @@ button{
   margin-left:-4px;
 }
 
+
+/* =========================
+   LOGIN TITLE
+========================= */
+
 .login-card h1{
   margin:10px 0 0;
+
   font-size:34px;
 }
 
 .login-card>p{
   margin:2px 0 28px;
+
   color:var(--muted);
 }
 
 
-/* =========================================================
+/* =========================
    FORM
-========================================================= */
+========================= */
 
 label{
   text-align:left;
+
   display:block;
+
   font-size:13px;
   font-weight:700;
+
   margin:14px 0;
 }
 
@@ -147,14 +172,17 @@ input,
 select,
 textarea{
   width:100%;
+
   padding:12px 14px;
 
   border:1px solid #e5e7eb;
+
   border-radius:12px;
 
   margin-top:7px;
 
   background:#fff;
+
   outline:none;
 }
 
@@ -167,8 +195,83 @@ textarea:focus{
     0 0 0 3px #6366f11a;
 }
 
+
+/* =========================
+   PASSWORD SHOW / HIDE
+========================= */
+
+.password-wrapper{
+  position:relative;
+
+  width:100%;
+}
+
+.password-wrapper input{
+  padding-right:52px;
+}
+
+.password-toggle{
+  position:absolute;
+
+  right:8px;
+  top:50%;
+
+  transform:translateY(-50%);
+
+  width:38px;
+  height:38px;
+
+  display:grid;
+  place-items:center;
+
+  padding:0;
+
+  background:transparent;
+
+  border-radius:10px;
+
+  color:#64748b;
+
+  font-size:19px;
+
+  line-height:1;
+
+  cursor:pointer;
+
+  transition:
+    background .2s ease,
+    color .2s ease,
+    transform .15s ease;
+}
+
+.password-toggle:hover{
+  background:#f1f5f9;
+
+  color:#4f46e5;
+}
+
+.password-toggle:active{
+  transform:
+    translateY(-50%)
+    scale(.95);
+}
+
+.password-toggle:focus{
+  outline:none;
+
+  background:#eef2ff;
+
+  color:#4f46e5;
+}
+
+
+/* =========================
+   LOGIN BUTTON
+========================= */
+
 .primary{
   width:100%;
+
   padding:13px;
 
   border-radius:13px;
@@ -183,13 +286,25 @@ textarea:focus{
     );
 
   font-weight:800;
+
   margin-top:8px;
+
+  transition:
+    opacity .2s ease,
+    transform .2s ease;
 }
 
 .primary:hover{
   opacity:.95;
-  transform:translateY(-1px);
+
+  transform:
+    translateY(-1px);
 }
+
+
+/* =========================
+   DEMO ACCOUNT
+========================= */
 
 .demo-hint{
   margin-top:20px;
@@ -209,51 +324,52 @@ textarea:focus{
 
 .toast{
   min-height:20px;
+
   color:var(--red);
+
   font-size:13px;
 }
 
 
-/* =========================================================
+/* =========================
    MAIN APP
-========================================================= */
+========================= */
 
 .shell{
   display:flex;
+
   min-height:100vh;
+
   width:100%;
 }
 
 
-/* =========================================================
-   DESKTOP SIDEBAR
-========================================================= */
+/* =========================
+   SIDEBAR
+========================= */
 
 .sidebar{
   width:250px;
   min-width:250px;
 
   background:#111827;
+
   color:white;
 
   padding:24px;
 
   position:fixed;
 
-  top:0;
-  left:0;
-  bottom:0;
+  inset:0 auto 0 0;
 
   overflow-y:auto;
 
-  z-index:1000;
-
-  transition:
-    transform .25s ease;
+  z-index:100;
 }
 
 .brand{
   font-weight:900;
+
   font-size:24px;
 }
 
@@ -263,6 +379,7 @@ textarea:focus{
   color:#a5b4fc;
 
   font-size:11px;
+
   font-weight:600;
 
   margin-top:2px;
@@ -293,13 +410,14 @@ textarea:focus{
 .nav button.active,
 .nav button:hover{
   background:#ffffff14;
+
   color:#fff;
 }
 
 
-/* =========================================================
+/* =========================
    MAIN CONTENT
-========================================================= */
+========================= */
 
 .main{
   margin-left:250px;
@@ -319,8 +437,6 @@ textarea:focus{
   align-items:center;
 
   margin-bottom:24px;
-
-  gap:16px;
 }
 
 .topbar h2{
@@ -338,93 +454,16 @@ textarea:focus{
 
   box-shadow:
     0 4px 18px #1118270b;
-
-  display:flex;
-
-  align-items:center;
-
-  gap:8px;
-
-  white-space:nowrap;
 }
 
 
-/* =========================================================
-   MOBILE MENU BUTTON
-   Desktop = ซ่อน
-========================================================= */
-
-.menu-toggle{
-  display:none;
-
-  position:fixed;
-
-  top:16px;
-  left:16px;
-
-  width:48px;
-  height:48px;
-
-  align-items:center;
-  justify-content:center;
-
-  border-radius:14px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #4f46e5,
-      #2563eb
-    );
-
-  color:#fff;
-
-  font-size:25px;
-
-  font-weight:900;
-
-  box-shadow:
-    0 8px 24px #4f46e566;
-
-  z-index:1101;
-
-  transition:
-    transform .2s ease,
-    box-shadow .2s ease;
-}
-
-.menu-toggle:hover{
-  transform:translateY(-1px);
-
-  box-shadow:
-    0 10px 28px #4f46e577;
-}
-
-
-/* =========================================================
-   SIDEBAR OVERLAY
-   Desktop = ซ่อน
-========================================================= */
-
-.sidebar-overlay{
-  display:none;
-
-  position:fixed;
-
-  inset:0;
-
-  background:#0f172a80;
-
-  z-index:999;
-}
-
-
-/* =========================================================
+/* =========================
    GRID
-========================================================= */
+========================= */
 
 .grid{
   display:grid;
+
   gap:16px;
 }
 
@@ -439,9 +478,9 @@ textarea:focus{
 }
 
 
-/* =========================================================
+/* =========================
    CARD
-========================================================= */
+========================= */
 
 .card{
   background:var(--card);
@@ -454,8 +493,6 @@ textarea:focus{
     0 8px 28px #1118270a;
 
   border:1px solid #eef0f5;
-
-  min-width:0;
 }
 
 .stat .num{
@@ -473,9 +510,9 @@ textarea:focus{
 }
 
 
-/* =========================================================
+/* =========================
    BADGES
-========================================================= */
+========================= */
 
 .badge{
   display:inline-flex;
@@ -515,9 +552,9 @@ textarea:focus{
 }
 
 
-/* =========================================================
+/* =========================
    ROW
-========================================================= */
+========================= */
 
 .row{
   display:flex;
@@ -530,13 +567,12 @@ textarea:focus{
 }
 
 
-/* =========================================================
+/* =========================
    TABLE
-========================================================= */
+========================= */
 
 .table-wrap{
-  overflow-x:auto;
-  width:100%;
+  overflow:auto;
 }
 
 .table{
@@ -560,9 +596,9 @@ textarea:focus{
 }
 
 
-/* =========================================================
+/* =========================
    BUTTONS
-========================================================= */
+========================= */
 
 .actions{
   display:flex;
@@ -592,23 +628,26 @@ textarea:focus{
 
 .btn.green{
   background:#dcfce7;
+
   color:#166534;
 }
 
 .btn.red{
   background:#fee2e2;
+
   color:#991b1b;
 }
 
 .btn.gray{
   background:#f1f5f9;
+
   color:#475569;
 }
 
 
-/* =========================================================
+/* =========================
    SECTIONS
-========================================================= */
+========================= */
 
 .section{
   display:none;
@@ -619,9 +658,9 @@ textarea:focus{
 }
 
 
-/* =========================================================
+/* =========================
    MODAL
-========================================================= */
+========================= */
 
 .modal-backdrop{
   position:fixed;
@@ -636,7 +675,7 @@ textarea:focus{
 
   padding:20px;
 
-  z-index:1200;
+  z-index:200;
 }
 
 .modal{
@@ -664,9 +703,9 @@ textarea:focus{
 }
 
 
-/* =========================================================
+/* =========================
    AI
-========================================================= */
+========================= */
 
 .ai-card{
   background:
@@ -690,9 +729,9 @@ textarea:focus{
 }
 
 
-/* =========================================================
+/* =========================
    NOTIFICATION SWITCH
-========================================================= */
+========================= */
 
 .switch-row{
   display:flex;
@@ -727,7 +766,6 @@ textarea:focus{
 
 .switch{
   width:44px;
-
   height:24px;
 
   background:#cbd5e1;
@@ -747,11 +785,9 @@ textarea:focus{
   position:absolute;
 
   width:18px;
-
   height:18px;
 
   left:3px;
-
   top:3px;
 
   background:#fff;
@@ -769,7 +805,8 @@ textarea:focus{
 }
 
 .switch-row input:checked + .switch:before{
-  transform:translateX(20px);
+  transform:
+    translateX(20px);
 }
 
 .file-link{
@@ -781,26 +818,11 @@ textarea:focus{
 }
 
 
-/* =========================================================
-   TABLET / MOBILE
-   <= 900px
-========================================================= */
+/* =========================
+   MOBILE SIDEBAR
+========================= */
 
 @media(max-width:900px){
-
-  /* -----------------------------------------
-     Mobile menu button
-  ----------------------------------------- */
-
-  .menu-toggle{
-    display:flex;
-  }
-
-
-  /* -----------------------------------------
-     Sidebar
-     ซ่อนออกด้านซ้าย
-  ----------------------------------------- */
 
   .sidebar{
     width:280px;
@@ -812,113 +834,37 @@ textarea:focus{
     transform:
       translateX(-100%);
 
+    transition:
+      transform .25s ease;
+
     box-shadow:
-      12px 0 35px #00000026;
+      10px 0 30px #0003;
   }
-
-
-  /* -----------------------------------------
-     เปิด Sidebar
-  ----------------------------------------- */
 
   body.sidebar-open .sidebar{
     transform:
       translateX(0);
   }
 
-
-  /* -----------------------------------------
-     Overlay
-  ----------------------------------------- */
-
-  body.sidebar-open .sidebar-overlay{
-    display:block;
-  }
-
-
-  /* -----------------------------------------
-     Main
-  ----------------------------------------- */
-
   .main{
     margin-left:0;
 
     width:100%;
 
-    padding:
-      82px
-      18px
-      24px;
+    padding:18px;
   }
-
-
-  /* -----------------------------------------
-     Brand
-  ----------------------------------------- */
-
-  .brand{
-    font-size:24px;
-  }
-
-  .brand:before{
-    display:none;
-  }
-
-  .brand small{
-    display:block;
-  }
-
-
-  /* -----------------------------------------
-     Navigation
-  ----------------------------------------- */
-
-  .nav button{
-    padding:13px 14px;
-
-    font-size:14px;
-  }
-
-  .brand small,
-  .nav button span{
-    display:block;
-  }
-
-
-  /* -----------------------------------------
-     Grid
-  ----------------------------------------- */
 
   .stats{
     grid-template-columns:
       repeat(2,1fr);
   }
 
-  .cards{
-    grid-template-columns:
-      repeat(2,1fr);
-  }
-
-
-  /* -----------------------------------------
-     Topbar
-  ----------------------------------------- */
-
-  .topbar{
-    align-items:flex-start;
-  }
-
-  .user-pill{
-    white-space:normal;
-  }
-
 }
 
 
-/* =========================================================
+/* =========================
    MOBILE
-   <= 600px
-========================================================= */
+========================= */
 
 @media(max-width:600px){
 
@@ -927,24 +873,13 @@ textarea:focus{
     grid-template-columns:1fr;
   }
 
-
   .topbar{
-    flex-direction:column;
-
     align-items:flex-start;
 
     gap:10px;
+
+    flex-direction:column;
   }
-
-
-  .user-pill{
-    width:100%;
-
-    justify-content:space-between;
-
-    border-radius:14px;
-  }
-
 
   .login-card{
     width:min(430px,94vw);
@@ -952,74 +887,48 @@ textarea:focus{
     padding:30px 24px;
   }
 
-
   .logo-image{
     width:72px;
     height:72px;
-  }
 
+    border-radius:19px;
+  }
 
   .login-card h1{
     font-size:30px;
   }
 
+  .password-toggle{
+    width:36px;
+    height:36px;
 
-  .main{
-    padding:
-      82px
-      14px
-      20px;
-  }
-
-
-  .card{
-    padding:16px;
-
-    border-radius:16px;
-  }
-
-
-  .row{
-    align-items:flex-start;
-  }
-
-
-  .table{
-    min-width:700px;
+    right:7px;
   }
 
 }
 
 
-/* =========================================================
-   VERY SMALL MOBILE
-   <= 380px
-========================================================= */
+/* =========================
+   SMALL MOBILE
+========================= */
 
 @media(max-width:380px){
 
-  .menu-toggle{
-    width:44px;
-    height:44px;
+  .login-card{
+    padding:26px 18px;
 
-    top:12px;
-    left:12px;
-
-    font-size:23px;
+    border-radius:22px;
   }
 
+  .logo-image{
+    width:65px;
+    height:65px;
 
-  .main{
-    padding:
-      70px
-      12px
-      18px;
+    border-radius:17px;
   }
 
-
-  .sidebar{
-    width:270px;
-    min-width:270px;
+  .login-card h1{
+    font-size:28px;
   }
 
 }
