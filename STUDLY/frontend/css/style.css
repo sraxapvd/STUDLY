@@ -16,11 +16,19 @@
   box-sizing:border-box;
 }
 
+html,
 body{
   margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
+}
+
+body{
   font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
   background:var(--bg);
   color:var(--text);
+  overflow-x:hidden;
 }
 
 button,
@@ -35,15 +43,19 @@ button{
   border:0;
 }
 
-/* =========================
+
+/* =========================================================
    LOGIN
-========================= */
+========================================================= */
 
 .login-bg{
   min-height:100vh;
+
   display:grid;
   place-items:center;
+
   padding:20px;
+
   background:
     radial-gradient(
       circle at 20% 20%,
@@ -58,50 +70,85 @@ button{
     #f8fafc;
 }
 
-/* Login Card */
+
+/* =========================================================
+   LOGIN CARD
+========================================================= */
 
 .login-card{
   width:min(430px,92vw);
+
   background:#fff;
+
   border-radius:28px;
+
   padding:40px;
-  box-shadow:0 24px 70px #312e811f;
+
+  box-shadow:
+    0 24px 70px rgba(49,46,129,.12);
+
   text-align:center;
 }
 
-/* =========================
-   LOGIN LOGO IMAGE
-========================= */
+
+/* =========================================================
+   LOGIN LOGO
+========================================================= */
 
 .logo-image{
-  width:80px;
-  height:80px;
-  object-fit:contain;
+  width:110px;
+  height:110px;
+
+  object-fit:cover;
+
   display:block;
+
   margin:0 auto 16px;
-  border-radius:20px;
-  box-shadow:0 8px 24px rgba(79,70,229,0.22);
+
+  border-radius:26px;
+
+  box-shadow:
+    0 12px 30px rgba(49,46,129,.25);
+
+  background:#fff;
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
 }
 
+.logo-image:hover{
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 16px 38px rgba(49,46,129,.30);
+}
+
+
 /*
-   เผื่อกรณีมีโลโก้แบบเดิม
-   ที่ใช้ class .logo-mark
+  กรณีมีโลโก้แบบ .logo-mark
 */
 
 .logo-mark{
   margin:auto;
+
   width:48px;
   height:48px;
+
   border-radius:14px;
+
   background:
     linear-gradient(
       135deg,
       var(--primary),
       var(--purple)
     );
+
   color:white;
+
   font-size:26px;
   font-weight:900;
+
   display:grid;
   place-items:center;
 }
@@ -111,27 +158,37 @@ button{
   margin-left:-4px;
 }
 
-/* Login Title */
+
+/* =========================================================
+   LOGIN TITLE
+========================================================= */
 
 .login-card h1{
   margin:10px 0 0;
+
   font-size:34px;
 }
 
 .login-card>p{
   margin:2px 0 28px;
+
   color:var(--muted);
 }
 
-/* =========================
+
+/* =========================================================
    FORM
-========================= */
+========================================================= */
 
 label{
   text-align:left;
+
   display:block;
+
   font-size:13px;
+
   font-weight:700;
+
   margin:14px 0;
 }
 
@@ -139,11 +196,17 @@ input,
 select,
 textarea{
   width:100%;
+
   padding:12px 14px;
+
   border:1px solid #e5e7eb;
+
   border-radius:12px;
+
   margin-top:7px;
+
   background:#fff;
+
   outline:none;
 }
 
@@ -151,290 +214,489 @@ input:focus,
 select:focus,
 textarea:focus{
   border-color:#818cf8;
+
   box-shadow:
     0 0 0 3px #6366f11a;
 }
 
-/* Login Button */
+
+/* =========================================================
+   LOGIN BUTTON
+========================================================= */
 
 .primary{
   width:100%;
+
   padding:13px;
+
   border-radius:13px;
+
   color:#fff;
+
   background:
     linear-gradient(
       135deg,
       var(--primary),
       var(--purple)
     );
+
   font-weight:800;
+
   margin-top:8px;
+
+  transition:
+    transform .2s ease,
+    opacity .2s ease;
 }
 
 .primary:hover{
   opacity:.95;
+
   transform:translateY(-1px);
 }
 
-/* Demo Account */
+
+/* =========================================================
+   DEMO ACCOUNT
+========================================================= */
 
 .demo-hint{
   margin-top:20px;
+
   background:#f8fafc;
+
   border-radius:14px;
+
   padding:12px;
+
   font-size:12px;
+
   color:var(--muted);
+
   line-height:1.7;
 }
 
 .toast{
   min-height:20px;
+
   color:var(--red);
+
   font-size:13px;
 }
 
-/* =========================
+
+/* =========================================================
    MAIN APP
-========================= */
+========================================================= */
 
 .shell{
   display:flex;
+
   min-height:100vh;
+
   width:100%;
+
+  min-width:0;
 }
 
-/* =========================
+
+/* =========================================================
    SIDEBAR
-========================= */
+   DESKTOP DEFAULT
+========================================================= */
 
 .sidebar{
   width:250px;
+
   min-width:250px;
+
   background:#111827;
+
   color:white;
+
   padding:24px;
+
   position:fixed;
+
   inset:0 auto 0 0;
+
   overflow-y:auto;
+
+  overflow-x:hidden;
+
+  z-index:1000;
+
+  transform:none;
+
+  transition:
+    transform .28s ease;
+
+  box-shadow:
+    4px 0 20px rgba(15,23,42,.08);
 }
+
+
+/* =========================================================
+   BRAND
+========================================================= */
 
 .brand{
   font-weight:900;
+
   font-size:24px;
+
+  color:#fff;
+
+  white-space:nowrap;
 }
 
 .brand small{
   display:block;
+
   color:#a5b4fc;
+
   font-size:11px;
+
   font-weight:600;
+
   margin-top:2px;
 }
 
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
 .nav{
   margin-top:30px;
+
   display:grid;
+
   gap:8px;
+
+  width:100%;
 }
 
 .nav button{
   background:transparent;
+
   color:#cbd5e1;
+
   text-align:left;
+
   padding:12px;
+
   border-radius:12px;
+
   width:100%;
+
+  min-height:44px;
+
+  display:block;
+
+  white-space:normal;
+
+  transition:
+    background .2s ease,
+    color .2s ease;
 }
 
 .nav button.active,
 .nav button:hover{
   background:#ffffff14;
+
   color:#fff;
 }
 
-/* =========================
+
+/*
+  สำคัญ:
+  ไม่ซ่อนข้อความเมนู
+*/
+
+.nav button span{
+  display:inline !important;
+
+  visibility:visible !important;
+
+  opacity:1 !important;
+}
+
+
+/* =========================================================
    MAIN CONTENT
-========================= */
+========================================================= */
 
 .main{
   margin-left:250px;
+
   width:calc(100% - 250px);
+
   min-width:0;
+
   padding:28px;
 }
 
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
 .topbar{
   display:flex;
+
   justify-content:space-between;
+
   align-items:center;
+
+  gap:16px;
+
   margin-bottom:24px;
+
+  min-width:0;
 }
 
 .topbar h2{
   margin:0;
+
+  font-size:28px;
 }
 
 .user-pill{
   background:#fff;
+
   padding:8px 12px;
+
   border-radius:999px;
+
   font-size:13px;
-  box-shadow:0 4px 18px #1118270b;
+
+  box-shadow:
+    0 4px 18px #1118270b;
+
+  white-space:nowrap;
 }
 
-/* =========================
+
+/* =========================================================
    GRID
-========================= */
+========================================================= */
 
 .grid{
   display:grid;
+
   gap:16px;
+
+  width:100%;
+
+  min-width:0;
 }
 
 .stats{
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:
+    repeat(4,minmax(0,1fr));
 }
 
 .cards{
-  grid-template-columns:repeat(2,1fr);
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
 }
 
-/* =========================
+
+/* =========================================================
    CARD
-========================= */
+========================================================= */
 
 .card{
   background:var(--card);
+
   border-radius:18px;
+
   padding:20px;
-  box-shadow:0 8px 28px #1118270a;
+
+  box-shadow:
+    0 8px 28px #1118270a;
+
   border:1px solid #eef0f5;
+
+  min-width:0;
+
+  overflow:hidden;
 }
 
 .stat .num{
   font-size:30px;
+
   font-weight:900;
+
   margin-top:7px;
 }
 
 .muted{
   color:var(--muted);
+
   font-size:13px;
 }
 
-/* =========================
+
+/* =========================================================
    BADGES
-========================= */
+========================================================= */
 
 .badge{
   display:inline-flex;
+
   padding:5px 9px;
+
   border-radius:999px;
+
   font-size:11px;
+
   font-weight:800;
+
+  white-space:nowrap;
 }
 
 .b-green{
   background:#dcfce7;
+
   color:#166534;
 }
 
 .b-blue{
   background:#dbeafe;
+
   color:#1d4ed8;
 }
 
 .b-yellow{
   background:#fef3c7;
+
   color:#92400e;
 }
 
 .b-red{
   background:#fee2e2;
+
   color:#991b1b;
 }
 
 .b-gray{
   background:#e5e7eb;
+
   color:#374151;
 }
 
-/* =========================
+
+/* =========================================================
    ROW
-========================= */
+========================================================= */
 
 .row{
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
+
   gap:12px;
+
+  min-width:0;
 }
 
-/* =========================
+
+/* =========================================================
    TABLE
-========================= */
+========================================================= */
 
 .table-wrap{
-  overflow:auto;
+  width:100%;
+
+  overflow-x:auto;
+
+  -webkit-overflow-scrolling:touch;
 }
 
 .table{
   width:100%;
+
   border-collapse:collapse;
+
   font-size:13px;
+
+  min-width:700px;
 }
 
 .table th,
 .table td{
   padding:12px;
+
   border-bottom:1px solid #eef0f5;
+
   text-align:left;
+
   vertical-align:top;
 }
 
-/* =========================
+
+/* =========================================================
    BUTTONS
-========================= */
+========================================================= */
 
 .actions{
   display:flex;
+
   gap:8px;
+
   flex-wrap:wrap;
 }
 
 .btn{
   padding:9px 12px;
+
   border-radius:10px;
+
   background:#eef2ff;
+
   color:#3730a3;
+
   font-weight:700;
+
   font-size:12px;
+
+  transition:
+    opacity .2s ease,
+    transform .2s ease;
 }
 
 .btn:hover{
   opacity:.9;
+
+  transform:translateY(-1px);
 }
 
 .btn.green{
   background:#dcfce7;
+
   color:#166534;
 }
 
 .btn.red{
   background:#fee2e2;
+
   color:#991b1b;
 }
 
 .btn.gray{
   background:#f1f5f9;
+
   color:#475569;
 }
 
-/* =========================
+
+/* =========================================================
    SECTIONS
-========================= */
+========================================================= */
 
 .section{
   display:none;
@@ -444,39 +706,55 @@ textarea:focus{
   display:block;
 }
 
-/* =========================
+
+/* =========================================================
    MODAL
-========================= */
+========================================================= */
 
 .modal-backdrop{
   position:fixed;
+
   inset:0;
+
   background:#0f172a99;
+
   display:grid;
+
   place-items:center;
+
   padding:20px;
-  z-index:20;
+
+  z-index:2000;
 }
 
 .modal{
   width:min(600px,96vw);
+
   max-height:90vh;
+
   overflow:auto;
+
   background:white;
+
   border-radius:20px;
+
   padding:24px;
 }
 
 .close{
   float:right;
+
   background:#f1f5f9;
+
   border-radius:10px;
+
   padding:5px 9px;
 }
 
-/* =========================
+
+/* =========================================================
    AI
-========================= */
+========================================================= */
 
 .ai-card{
   background:
@@ -493,22 +771,32 @@ textarea:focus{
 
 .empty{
   padding:28px;
+
   text-align:center;
+
   color:var(--muted);
 }
 
-/* =========================
+
+/* =========================================================
    NOTIFICATION SWITCH
-========================= */
+========================================================= */
 
 .switch-row{
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
+
   gap:14px;
+
   padding:13px 0;
+
   border-bottom:1px solid #eef0f5;
+
   font-size:14px;
+
   font-weight:700;
 }
 
@@ -518,30 +806,47 @@ textarea:focus{
 
 .switch-row input{
   position:absolute;
+
   opacity:0;
+
   pointer-events:none;
 }
 
 .switch{
   width:44px;
+
   height:24px;
+
   background:#cbd5e1;
+
   border-radius:999px;
+
   position:relative;
+
   transition:.2s;
+
   flex:0 0 auto;
 }
 
 .switch:before{
   content:'';
+
   position:absolute;
+
   width:18px;
+
   height:18px;
+
   left:3px;
+
   top:3px;
+
   background:#fff;
+
   border-radius:50%;
+
   box-shadow:0 1px 3px #0002;
+
   transition:.2s;
 }
 
@@ -555,75 +860,428 @@ textarea:focus{
 
 .file-link{
   display:inline-flex;
+
   align-items:center;
+
   gap:6px;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
 
-@media(max-width:900px){
+/* =========================================================
+   MOBILE MENU BUTTON
+   ค่าเริ่มต้น = ซ่อน
+========================================================= */
+
+.menu-toggle{
+  display:none;
+
+  position:fixed;
+
+  top:16px;
+
+  left:16px;
+
+  width:44px;
+
+  height:44px;
+
+  border:0;
+
+  border-radius:12px;
+
+  background:#111827;
+
+  color:#fff;
+
+  font-size:24px;
+
+  line-height:1;
+
+  align-items:center;
+
+  justify-content:center;
+
+  cursor:pointer;
+
+  z-index:1100;
+
+  box-shadow:
+    0 8px 24px rgba(15,23,42,.22);
+}
+
+
+/* =========================================================
+   SIDEBAR OVERLAY
+========================================================= */
+
+.sidebar-overlay{
+  display:none;
+
+  position:fixed;
+
+  inset:0;
+
+  background:rgba(15,23,42,.48);
+
+  z-index:999;
+
+  opacity:0;
+
+  visibility:hidden;
+
+  pointer-events:none;
+
+  transition:
+    opacity .28s ease,
+    visibility .28s ease;
+}
+
+
+/* =========================================================
+   DESKTOP
+   > 900px
+========================================================= */
+
+@media(min-width:901px){
+
+  .menu-toggle{
+    display:none !important;
+  }
+
+  .sidebar-overlay{
+    display:none !important;
+  }
 
   .sidebar{
-    width:72px;
-    min-width:72px;
-    padding:16px 10px;
-  }
+    position:fixed;
 
-  .brand{
-    font-size:0;
-  }
+    left:0;
+    top:0;
+    bottom:0;
 
-  .brand:before{
-    content:'S';
-    font-size:24px;
-  }
+    width:250px;
 
-  .brand small,
-  .nav button span{
-    display:none;
+    min-width:250px;
+
+    transform:none;
+
+    z-index:1000;
   }
 
   .main{
-    margin-left:72px;
-    width:calc(100% - 72px);
-    padding:18px;
+    margin-left:250px;
+
+    width:calc(100% - 250px);
+
+    padding:28px;
   }
 
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
 }
 
-/* =========================
+
+/* =========================================================
+   TABLET / IPAD / MOBILE
+   <= 900px
+========================================================= */
+
+@media(max-width:900px){
+
+  /*
+    แสดงปุ่ม ☰
+  */
+
+  .menu-toggle{
+    display:flex;
+  }
+
+
+  /*
+    Sidebar ซ่อนออกไปทางซ้าย
+  */
+
+  .sidebar{
+    position:fixed;
+
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:280px;
+
+    min-width:280px;
+
+    padding:24px;
+
+    overflow-y:auto;
+
+    overflow-x:hidden;
+
+    background:#111827;
+
+    z-index:1001;
+
+    transform:translateX(-100%);
+
+    transition:
+      transform .28s ease;
+
+    box-shadow:
+      12px 0 35px rgba(0,0,0,.18);
+  }
+
+
+  /*
+    เมื่อเปิด Sidebar
+  */
+
+  body.sidebar-open .sidebar{
+    transform:translateX(0);
+  }
+
+
+  /*
+    เปิด Overlay
+  */
+
+  body.sidebar-open .sidebar-overlay{
+    display:block;
+
+    opacity:1;
+
+    visibility:visible;
+
+    pointer-events:auto;
+  }
+
+
+  /*
+    Brand ต้องแสดง
+  */
+
+  .brand{
+    display:block !important;
+
+    font-size:24px !important;
+
+    font-weight:900;
+
+    color:#fff;
+
+    white-space:nowrap;
+  }
+
+  .brand small{
+    display:block !important;
+
+    font-size:11px !important;
+
+    color:#a5b4fc;
+
+    margin-top:2px;
+  }
+
+
+  /*
+    Navigation ต้องแสดงทั้งหมด
+  */
+
+  .nav{
+    display:grid !important;
+
+    gap:8px;
+
+    margin-top:30px;
+
+    width:100%;
+  }
+
+  .nav button{
+    display:block !important;
+
+    width:100%;
+
+    min-height:44px;
+
+    padding:12px;
+
+    color:#cbd5e1;
+
+    background:transparent;
+
+    text-align:left;
+
+    border-radius:12px;
+  }
+
+  .nav button span{
+    display:inline !important;
+
+    visibility:visible !important;
+
+    opacity:1 !important;
+  }
+
+
+  /*
+    Main เต็มพื้นที่
+  */
+
+  .main{
+    margin-left:0 !important;
+
+    width:100% !important;
+
+    min-width:0;
+
+    padding:20px;
+  }
+
+
+  /*
+    กันหน้าจอล้นด้านข้าง
+  */
+
+  body{
+    overflow-x:hidden;
+  }
+
+  .shell{
+    width:100%;
+
+    min-width:0;
+  }
+
+
+  /*
+    เว้นพื้นที่ให้ปุ่ม ☰
+  */
+
+  .topbar{
+    padding-left:56px;
+  }
+
+
+  /*
+    Tablet
+  */
+
+  .stats{
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+  }
+
+  .cards{
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+  }
+
+}
+
+
+/* =========================================================
    MOBILE
-========================= */
+   <= 600px
+========================================================= */
 
 @media(max-width:600px){
 
-  .cards,
-  .stats{
+  .menu-toggle{
+    top:12px;
+
+    left:12px;
+
+    width:42px;
+
+    height:42px;
+
+    font-size:22px;
+
+    border-radius:11px;
+  }
+
+
+  .sidebar{
+    width:min(280px,82vw);
+
+    min-width:min(280px,82vw);
+
+    padding:22px 18px;
+  }
+
+
+  .main{
+    padding:16px;
+
+    width:100%;
+  }
+
+
+  .topbar{
+    padding-left:54px;
+
+    align-items:flex-start;
+
+    gap:12px;
+
+    flex-direction:column;
+
+    width:100%;
+  }
+
+
+  .topbar h2{
+    font-size:24px;
+  }
+
+
+  .user-pill{
+    max-width:100%;
+
+    white-space:normal;
+  }
+
+
+  .stats,
+  .cards{
     grid-template-columns:1fr;
   }
 
-  .topbar{
-    align-items:flex-start;
-    gap:10px;
-    flex-direction:column;
+
+  .card{
+    width:100%;
+
+    min-width:0;
+
+    overflow:hidden;
   }
+
+
+  .table-wrap{
+    width:100%;
+
+    overflow-x:auto;
+
+    -webkit-overflow-scrolling:touch;
+  }
+
 
   .login-card{
     width:min(430px,94vw);
+
     padding:30px 24px;
+
+    border-radius:24px;
   }
 
+
   .logo-image{
-  width:65px;
-  height:65px;
-  border-radius:18px;
-  box-shadow:0 8px 24px rgba(79,70,229,0.22);
-}
+    width:100px;
+
+    height:100px;
+
+    border-radius:24px;
+  }
+
 
   .login-card h1{
     font-size:30px;
@@ -632,157 +1290,62 @@ textarea:focus{
 }
 
 
-/* =========================
-   SIDEBAR TOGGLE
-========================= */
+/* =========================================================
+   IPAD / TABLET
+   601px - 900px
+========================================================= */
 
-.menu-toggle{
-  position:fixed;
-  top:18px;
-  left:18px;
-
-  width:42px;
-  height:42px;
-
-  border-radius:12px;
-
-  background:#111827;
-  color:#fff;
-
-  font-size:20px;
-  font-weight:800;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  z-index:2000;
-
-  box-shadow:0 6px 20px #11182733;
-}
-
-.menu-toggle:hover{
-  transform:translateY(-1px);
-}
-
-
-/* Sidebar เปิด */
-
-.sidebar{
-  transition:
-    transform .25s ease,
-    width .25s ease;
-}
-
-
-/* Main */
-
-.main{
-  transition:
-    margin-left .25s ease,
-    width .25s ease;
-}
-
-
-/* =========================
-   SIDEBAR COLLAPSED
-========================= */
-
-body.sidebar-collapsed .sidebar{
-  transform:translateX(-100%);
-}
-
-body.sidebar-collapsed .main{
-  margin-left:0;
-  width:100%;
-}
-
-
-/* =========================
-   TABLET
-========================= */
-
-@media(max-width:900px){
-
-  .menu-toggle{
-    top:12px;
-    left:12px;
-  }
-
-  .sidebar{
-    width:250px;
-    min-width:250px;
-
-    transform:translateX(-100%);
-
-    box-shadow:10px 0 30px #0003;
-  }
-
-  body.sidebar-open .sidebar{
-    transform:translateX(0);
-  }
+@media(min-width:601px) and (max-width:900px){
 
   .main{
-    margin-left:0;
-    width:100%;
-
-    padding:70px 18px 18px;
-  }
-
-  body.sidebar-open .main{
-    margin-left:0;
-    width:100%;
+    padding:24px;
   }
 
 
-  /* ฉากมืดด้านหลัง */
-
-  .sidebar-overlay{
-    display:none;
-
-    position:fixed;
-    inset:0;
-
-    background:#00000066;
-
-    z-index:900;
+  .topbar{
+    padding-left:60px;
   }
 
-  body.sidebar-open .sidebar-overlay{
-    display:block;
+
+  .sidebar{
+    width:280px;
+
+    min-width:280px;
   }
 
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+/* =========================================================
+   SMALL MOBILE
+   <= 380px
+========================================================= */
 
-@media(max-width:600px){
-
-  .menu-toggle{
-    width:40px;
-    height:40px;
-
-    top:10px;
-    left:10px;
-
-    border-radius:11px;
-  }
+@media(max-width:380px){
 
   .sidebar{
-    width:260px;
-    min-width:260px;
+    width:82vw;
 
-    padding:20px;
+    min-width:82vw;
   }
 
+
   .main{
-    padding:
-      62px
-      12px
-      16px;
+    padding:12px;
+  }
+
+
+  .topbar{
+    padding-left:52px;
+  }
+
+
+  .logo-image{
+    width:90px;
+
+    height:90px;
+
+    border-radius:22px;
   }
 
 }
