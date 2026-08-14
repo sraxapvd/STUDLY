@@ -12,6 +12,11 @@
   --card:#ffffff;
 }
 
+
+/* =========================
+   GLOBAL
+========================= */
+
 *{
   box-sizing:border-box;
 }
@@ -166,6 +171,7 @@ button{
   margin:8px 0 0;
 
   font-size:34px;
+
   line-height:1.15;
 
   white-space:normal;
@@ -177,6 +183,7 @@ button{
   color:var(--muted);
 
   font-size:16px;
+
   line-height:1.5;
 
   max-width:100%;
@@ -195,6 +202,7 @@ label{
   display:block;
 
   font-size:13px;
+
   font-weight:700;
 
   margin:14px 0;
@@ -237,40 +245,63 @@ textarea:focus{
 ========================= */
 
 .password-toggle{
-  display:flex;
+  display:flex !important;
 
-  align-items:center;
+  flex-direction:row !important;
+
+  align-items:center !important;
+
+  justify-content:flex-start !important;
 
   gap:10px;
 
-  margin-top:10px;
+  width:100%;
+
+  max-width:100%;
+
+  margin:10px 0 0;
+
+  padding:0;
 
   font-size:14px;
+
+  line-height:1.4;
 
   font-weight:600;
 
   color:#475569;
 
+  text-align:left;
+
   cursor:pointer;
-
-  width:max-content;
-
-  max-width:100%;
 }
 
 .password-toggle input{
-  width:20px;
-  height:20px;
+  width:20px !important;
 
-  margin:0;
+  height:20px !important;
 
-  flex:0 0 auto;
+  min-width:20px;
+
+  margin:0 !important;
+
+  padding:0;
+
+  flex:0 0 20px;
 
   cursor:pointer;
 }
 
 .password-toggle span{
-  white-space:normal;
+  display:block;
+
+  margin:0;
+
+  padding:0;
+
+  white-space:nowrap;
+
+  line-height:20px;
 }
 
 
@@ -370,6 +401,7 @@ textarea:focus{
 
 .sidebar{
   width:250px;
+
   min-width:250px;
 
   background:#111827;
@@ -501,11 +533,13 @@ textarea:focus{
 }
 
 .stats{
-  grid-template-columns:repeat(4,minmax(0,1fr));
+  grid-template-columns:
+    repeat(4,minmax(0,1fr));
 }
 
 .cards{
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
 }
 
 
@@ -916,7 +950,8 @@ textarea:focus{
   }
 
   .stats{
-    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
   }
 
   .topbar{
@@ -933,8 +968,14 @@ textarea:focus{
 
   body{
     width:100%;
+
     overflow-x:hidden;
   }
+
+
+  /* =========================
+     LOGIN MOBILE
+  ========================= */
 
   .login-bg{
     width:100%;
@@ -965,7 +1006,7 @@ textarea:focus{
   }
 
 
-  /* Logo มือถือ */
+  /* Logo */
 
   .logo-image{
     width:88px;
@@ -977,11 +1018,12 @@ textarea:focus{
     margin-bottom:12px;
 
     box-shadow:
-      0 8px 22px rgba(49,46,129,.18);
+      0 8px 22px
+      rgba(49,46,129,.18);
   }
 
 
-  /* หัวข้อ */
+  /* Title */
 
   .login-card h1{
     font-size:30px;
@@ -1029,20 +1071,63 @@ textarea:focus{
   }
 
 
-  /* Show password */
+  /* =========================
+     SHOW PASSWORD MOBILE
+  ========================= */
 
   .password-toggle{
-    font-size:14px;
+    display:flex !important;
+
+    flex-direction:row !important;
+
+    align-items:center !important;
+
+    justify-content:flex-start !important;
+
+    width:100%;
 
     gap:9px;
 
-    margin-top:8px;
+    margin:
+      8px 0 0;
+
+    padding:0;
+
+    font-size:14px;
+
+    line-height:1.4;
+
+    text-align:left;
   }
 
   .password-toggle input{
-    width:20px;
+    display:block;
 
-    height:20px;
+    width:20px !important;
+
+    height:20px !important;
+
+    min-width:20px;
+
+    margin:0 !important;
+
+    padding:0;
+
+    flex:0 0 20px;
+
+    cursor:pointer;
+  }
+
+  .password-toggle span{
+    display:block;
+
+    margin:0;
+
+    padding:0;
+
+    white-space:nowrap;
+
+    line-height:20px;
   }
 
 
@@ -1066,7 +1151,8 @@ textarea:focus{
 
     margin-top:18px;
 
-    padding:12px 10px;
+    padding:
+      12px 10px;
 
     font-size:11px;
 
@@ -1110,14 +1196,12 @@ textarea:focus{
 
   .login-bg{
     padding:
-      12px
-      8px;
+      12px 8px;
   }
 
   .login-card{
     padding:
-      24px
-      16px;
+      24px 16px;
 
     border-radius:22px;
   }
@@ -1143,6 +1227,44 @@ textarea:focus{
   label{
     font-size:13px;
   }
+
+
+  /* Show password */
+
+  .password-toggle{
+    display:flex !important;
+
+    flex-direction:row !important;
+
+    align-items:center !important;
+
+    justify-content:flex-start !important;
+
+    width:100%;
+
+    gap:8px;
+
+    margin-top:8px;
+  }
+
+  .password-toggle input{
+    width:19px !important;
+
+    height:19px !important;
+
+    min-width:19px;
+
+    flex:0 0 19px;
+
+    margin:0 !important;
+  }
+
+  .password-toggle span{
+    white-space:nowrap;
+
+    line-height:19px;
+  }
+
 
   .demo-hint{
     font-size:10px;
