@@ -1,6 +1,7 @@
 const API = '/api';
 
-const token = () => sessionStorage.getItem('studly_token');
+const token = () =>
+  sessionStorage.getItem('studly_token');
 
 
 /* =========================================================
@@ -52,7 +53,8 @@ async function api(path, opts = {}) {
 
 function toast(msg, ok = false) {
 
-  const el = document.getElementById('toast');
+  const el =
+    document.getElementById('toast');
 
   if (!el) return;
 
@@ -291,12 +293,15 @@ async function fileBlob(url) {
   }
 
   return {
-    blob: await r.blob(),
+
+    blob:
+      await r.blob(),
 
     disposition:
       r.headers.get(
         'Content-Disposition'
       ) || ''
+
   };
 }
 
@@ -341,7 +346,9 @@ async function openFile(url) {
     }
 
     setTimeout(
-      () => URL.revokeObjectURL(u),
+      () => {
+        URL.revokeObjectURL(u);
+      },
       60000
     );
 
@@ -352,7 +359,9 @@ async function openFile(url) {
     }
 
     toast(e.message);
+
   }
+
 }
 
 
@@ -385,24 +394,25 @@ async function downloadFile(url) {
     a.remove();
 
     setTimeout(
-      () => URL.revokeObjectURL(u),
+      () => {
+        URL.revokeObjectURL(u);
+      },
       1000
     );
 
   } catch (e) {
 
     toast(e.message);
+
   }
+
 }
 
 
 /* =========================================================
-   SIDEBAR
+   SIDEBAR FUNCTIONS
 ========================================================= */
 
-/*
-   เปิด Sidebar
-*/
 function openSidebar() {
 
   document.body.classList.add(
@@ -423,13 +433,16 @@ function openSidebar() {
       'ปิดเมนู'
     );
 
+    toggle.setAttribute(
+      'aria-expanded',
+      'true'
+    );
+
   }
+
 }
 
 
-/*
-   ปิด Sidebar
-*/
 function closeSidebar() {
 
   document.body.classList.remove(
@@ -450,20 +463,24 @@ function closeSidebar() {
       'เปิดเมนู'
     );
 
+    toggle.setAttribute(
+      'aria-expanded',
+      'false'
+    );
+
   }
+
 }
 
 
-/*
-   เปิด / ปิด Sidebar
-*/
 function toggleSidebar() {
 
-  if (
+  const opened =
     document.body.classList.contains(
       'sidebar-open'
-    )
-  ) {
+    );
+
+  if (opened) {
 
     closeSidebar();
 
@@ -472,6 +489,7 @@ function toggleSidebar() {
     openSidebar();
 
   }
+
 }
 
 
@@ -482,37 +500,48 @@ function toggleSidebar() {
 
 function shell(user, role) {
 
-  document.getElementById(
-    'app'
-  ).innerHTML = `
+  const app =
+    document.getElementById(
+      'app'
+    );
 
-    <!-- Mobile Sidebar Toggle -->
-
-    <button
-      id="menuToggle"
-      class="sidebar-toggle"
-      type="button"
-      aria-label="เปิดเมนู"
-      aria-expanded="false"
-    >
-      ☰
-    </button>
+  if (!app) return;
 
 
-    <!-- Sidebar Overlay -->
-
-    <div
-      id="sidebarOverlay"
-      class="sidebar-overlay"
-    ></div>
-
+  app.innerHTML = `
 
     <div class="shell">
 
 
-      <!-- =========================
+      <!-- =================================================
+           SIDEBAR TOGGLE BUTTON
+           มีปุ่มนี้เพียง 1 ปุ่ม
+      ================================================== -->
+
+      <button
+        id="menuToggle"
+        class="menu-toggle"
+        type="button"
+        aria-label="เปิดเมนู"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
+
+
+      <!-- =================================================
+           SIDEBAR OVERLAY
+      ================================================== -->
+
+      <div
+        id="sidebarOverlay"
+        class="sidebar-overlay"
+      ></div>
+
+
+      <!-- =================================================
            SIDEBAR
-      ========================= -->
+      ================================================== -->
 
       <aside
         class="sidebar"
@@ -538,13 +567,14 @@ function shell(user, role) {
       </aside>
 
 
-      <!-- =========================
-           MAIN
-      ========================= -->
+      <!-- =================================================
+           MAIN CONTENT
+      ================================================== -->
 
       <main class="main">
 
         <div class="topbar">
+
 
           <div>
 
@@ -580,6 +610,7 @@ function shell(user, role) {
 
           </div>
 
+
         </div>
 
 
@@ -587,14 +618,15 @@ function shell(user, role) {
 
       </main>
 
+
     </div>
 
   `;
 
 
-  /* =======================================================
-     SIDEBAR TOGGLE
-  ======================================================= */
+  /* =========================================================
+     SIDEBAR TOGGLE BUTTON
+  ========================================================= */
 
   const toggle =
     document.getElementById(
@@ -615,31 +647,15 @@ function shell(user, role) {
 
     toggle.addEventListener(
       'click',
-      () => {
-
-        toggleSidebar();
-
-        const opened =
-          document.body.classList.contains(
-            'sidebar-open'
-          );
-
-        toggle.setAttribute(
-          'aria-expanded',
-          opened
-            ? 'true'
-            : 'false'
-        );
-
-      }
+      toggleSidebar
     );
 
   }
 
 
   /*
-     คลิกพื้นที่ด้านนอก Sidebar
-     = ปิด Sidebar
+     คลิกพื้นที่มืดด้านนอก
+     เพื่อปิด Sidebar
   */
 
   if (overlay) {
@@ -652,15 +668,14 @@ function shell(user, role) {
   }
 
 
-  /* =======================================================
+  /* =========================================================
      NAVIGATION
-  ======================================================= */
+  ========================================================= */
 
   const nav =
     document.getElementById(
       'nav'
     );
-
 
   if (nav) {
 
@@ -677,8 +692,8 @@ function shell(user, role) {
 
 
         /*
-           บนมือถือ/แท็บเล็ต
-           เมื่อกดเมนูแล้วให้ Sidebar ปิด
+           บนมือถือ / Tablet
+           เมื่อกดเมนูแล้ว Sidebar ปิด
         */
 
         if (
@@ -695,19 +710,24 @@ function shell(user, role) {
   }
 
 
-  /* =======================================================
-     RESET SIDEBAR
-     เมื่อโหลดหน้าใหม่
-  ======================================================= */
+  /*
+     เริ่มต้นให้ Sidebar ปิด
+     สำหรับ Mobile / Tablet
+  */
 
-  closeSidebar();
+  if (
+    window.innerWidth <= 900
+  ) {
+
+    closeSidebar();
+
+  }
 
 }
 
 
 /* =========================================================
    RESPONSIVE
-   เมื่อเปลี่ยนขนาดหน้าจอ
 ========================================================= */
 
 window.addEventListener(
@@ -715,8 +735,8 @@ window.addEventListener(
   () => {
 
     /*
-       ถ้ากลับมาเป็น Desktop
-       ให้ปิดสถานะ Mobile Sidebar
+       ถ้าเปลี่ยนกลับเป็น Desktop
+       ปิดสถานะ Sidebar Mobile
     */
 
     if (
@@ -733,7 +753,6 @@ window.addEventListener(
 
 /* =========================================================
    ESC KEY
-   กด ESC เพื่อปิด Sidebar
 ========================================================= */
 
 document.addEventListener(
@@ -744,15 +763,7 @@ document.addEventListener(
       event.key === 'Escape'
     ) {
 
-      if (
-        document.body.classList.contains(
-          'sidebar-open'
-        )
-      ) {
-
-        closeSidebar();
-
-      }
+      closeSidebar();
 
     }
 
@@ -764,20 +775,26 @@ document.addEventListener(
    EXPORT
 ========================================================= */
 
-window.api = api;
+window.api =
+  api;
 
-window.guard = guard;
+window.guard =
+  guard;
 
-window.logout = logout;
+window.logout =
+  logout;
 
-window.toast = toast;
+window.toast =
+  toast;
 
-window.esc = esc;
+window.esc =
+  esc;
 
 window.statusBadge =
   statusBadge;
 
-window.shell = shell;
+window.shell =
+  shell;
 
 window.openFile =
   openFile;
