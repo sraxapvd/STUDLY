@@ -63,7 +63,9 @@
     <form id="loginForm">
 
 
-      <!-- EMAIL -->
+      <!-- =========================
+           EMAIL
+      ========================== -->
 
       <label>
 
@@ -79,7 +81,9 @@
       </label>
 
 
-      <!-- PASSWORD -->
+      <!-- =========================
+           PASSWORD
+      ========================== -->
 
       <label>
 
@@ -94,21 +98,30 @@
             placeholder="Password"
           >
 
-          <button
-            type="button"
-            class="password-toggle"
-            id="passwordToggle"
-            aria-label="แสดงรหัสผ่าน"
-          >
-            👁
-          </button>
-
         </div>
+
+
+        <!-- SHOW PASSWORD -->
+
+        <label class="show-password">
+
+          <input
+            type="checkbox"
+            id="showPassword"
+          >
+
+          <span>
+            Show password
+          </span>
+
+        </label>
 
       </label>
 
 
-      <!-- LOGIN BUTTON -->
+      <!-- =========================
+           LOGIN BUTTON
+      ========================== -->
 
       <button
         class="primary"
@@ -122,7 +135,7 @@
 
 
     <!-- =========================
-         DEMO ACCOUNT
+         DEMO ACCOUNTS
     ========================== -->
 
     <div class="demo-hint">
@@ -157,7 +170,7 @@
 
 
   <!-- =========================
-       PASSWORD SHOW / HIDE
+       SHOW PASSWORD
   ========================== -->
 
   <script>
@@ -165,36 +178,18 @@
     const passwordInput =
       document.getElementById('password');
 
-    const passwordToggle =
-      document.getElementById('passwordToggle');
+    const showPassword =
+      document.getElementById('showPassword');
 
 
-    passwordToggle.addEventListener(
-      'click',
+    showPassword.addEventListener(
+      'change',
       () => {
 
-        const isPassword =
-          passwordInput.type === 'password';
-
-
         passwordInput.type =
-          isPassword
+          showPassword.checked
             ? 'text'
             : 'password';
-
-
-        passwordToggle.textContent =
-          isPassword
-            ? '🙈'
-            : '👁';
-
-
-        passwordToggle.setAttribute(
-          'aria-label',
-          isPassword
-            ? 'ซ่อนรหัสผ่าน'
-            : 'แสดงรหัสผ่าน'
-        );
 
       }
     );
