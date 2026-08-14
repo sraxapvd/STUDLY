@@ -120,18 +120,63 @@ async function login(e) {
 }
 
 
-if (
+/* =========================
+   LOGIN FORM
+========================= */
+
+const loginForm =
   document.getElementById(
     'loginForm'
-  )
+  );
+
+if (loginForm) {
+
+  loginForm.addEventListener(
+    'submit',
+    login
+  );
+
+}
+
+
+/* =========================
+   SHOW PASSWORD
+========================= */
+
+const showPassword =
+  document.getElementById(
+    'showPassword'
+  );
+
+const passwordInput =
+  document.getElementById(
+    'password'
+  );
+
+
+if (
+  showPassword &&
+  passwordInput
 ) {
 
-  document
-    .getElementById('loginForm')
-    .addEventListener(
-      'submit',
-      login
-    );
+  showPassword.addEventListener(
+    'change',
+    function () {
+
+      if (this.checked) {
+
+        passwordInput.type =
+          'text';
+
+      } else {
+
+        passwordInput.type =
+          'password';
+
+      }
+
+    }
+  );
 
 }
 
@@ -404,8 +449,7 @@ async function downloadFile(url) {
 
 
 /* =========================
-   REMOVE OLD MENU BUTTONS
-   ป้องกันปุ่ม ☰ ซ้ำ
+   REMOVE OLD SIDEBAR ELEMENTS
 ========================= */
 
 function removeOldSidebarElements() {
@@ -430,18 +474,11 @@ function removeOldSidebarElements() {
 
 /* =========================
    SHELL
-   สร้าง Sidebar + Main App
 ========================= */
 
 function shell(user, role) {
 
-  /*
-    ลบปุ่มเก่าออกก่อน
-    เพื่อป้องกัน ☰ ซ้ำ
-  */
-
   removeOldSidebarElements();
-
 
   const app =
     document.getElementById(
@@ -453,9 +490,7 @@ function shell(user, role) {
 
   app.innerHTML = `
 
-    <!-- =====================
-         MOBILE MENU BUTTON
-    ====================== -->
+    <!-- MOBILE MENU BUTTON -->
 
     <button
       class="menu-toggle"
@@ -468,9 +503,7 @@ function shell(user, role) {
     </button>
 
 
-    <!-- =====================
-         SIDEBAR OVERLAY
-    ====================== -->
+    <!-- SIDEBAR OVERLAY -->
 
     <div
       class="sidebar-overlay"
@@ -478,16 +511,12 @@ function shell(user, role) {
     ></div>
 
 
-    <!-- =====================
-         APP SHELL
-    ====================== -->
+    <!-- APP -->
 
     <div class="shell">
 
 
-      <!-- =====================
-           SIDEBAR
-      ====================== -->
+      <!-- SIDEBAR -->
 
       <aside
         class="sidebar"
@@ -527,9 +556,7 @@ function shell(user, role) {
       </aside>
 
 
-      <!-- =====================
-           MAIN
-      ====================== -->
+      <!-- MAIN -->
 
       <main class="main">
 
@@ -590,11 +617,6 @@ function shell(user, role) {
   const toggle =
     document.getElementById(
       'menuToggle'
-    );
-
-  const sidebar =
-    document.getElementById(
-      'sidebar'
     );
 
   const closeBtn =
@@ -659,7 +681,7 @@ function shell(user, role) {
 
 
   /* =========================
-     TOGGLE BUTTON
+     TOGGLE
   ========================= */
 
   if (toggle) {
@@ -685,7 +707,7 @@ function shell(user, role) {
 
 
   /* =========================
-     CLOSE BUTTON
+     CLOSE
   ========================= */
 
   if (closeBtn) {
@@ -711,9 +733,7 @@ function shell(user, role) {
 
 
   /* =========================
-     MENU CLICK
-     ปิด Sidebar หลังเลือกเมนู
-     เฉพาะมือถือ
+     NAV CLICK
   ========================= */
 
   const nav =
@@ -739,6 +759,7 @@ function shell(user, role) {
         ) {
 
           closeSidebar();
+
         }
 
       }
@@ -754,16 +775,12 @@ function shell(user, role) {
     'resize',
     () => {
 
-      /*
-        ถ้ากลับมาเป็นจอคอม
-        ให้ปิด mobile sidebar state
-      */
-
       if (
         window.innerWidth > 900
       ) {
 
         closeSidebar();
+
       }
 
     }
@@ -771,7 +788,7 @@ function shell(user, role) {
 
 
   /* =========================
-     ESC KEY
+     ESC
   ========================= */
 
   document.addEventListener(
@@ -783,6 +800,7 @@ function shell(user, role) {
       ) {
 
         closeSidebar();
+
       }
 
     }
