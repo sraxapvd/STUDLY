@@ -2,6 +2,7 @@
 <html lang="th">
 
 <head>
+
   <meta charset="utf-8">
 
   <meta
@@ -15,11 +16,19 @@
     rel="stylesheet"
     href="css/style.css"
   >
+
 </head>
+
 
 <body class="login-bg">
 
+
   <main class="login-card">
+
+
+    <!-- =========================
+         LOGO
+    ========================== -->
 
     <img
       src="assets/logo.png"
@@ -27,18 +36,37 @@
       class="logo-image"
     >
 
+
+    <!-- =========================
+         TITLE
+    ========================== -->
+
     <h1>STUDLY</h1>
 
     <p>Your AI Study Buddy</p>
+
+
+    <!-- =========================
+         TOAST
+    ========================== -->
 
     <div
       id="toast"
       class="toast"
     ></div>
 
+
+    <!-- =========================
+         LOGIN FORM
+    ========================== -->
+
     <form id="loginForm">
 
+
+      <!-- EMAIL -->
+
       <label>
+
         Email
 
         <input
@@ -47,18 +75,40 @@
           required
           placeholder="Email"
         >
+
       </label>
+
+
+      <!-- PASSWORD -->
 
       <label>
+
         Password
 
-        <input
-          id="password"
-          type="password"
-          required
-          placeholder="Password"
-        >
+        <div class="password-wrapper">
+
+          <input
+            id="password"
+            type="password"
+            required
+            placeholder="Password"
+          >
+
+          <button
+            type="button"
+            class="password-toggle"
+            id="passwordToggle"
+            aria-label="แสดงรหัสผ่าน"
+          >
+            👁
+          </button>
+
+        </div>
+
       </label>
+
+
+      <!-- LOGIN BUTTON -->
 
       <button
         class="primary"
@@ -67,7 +117,13 @@
         เข้าสู่ระบบ
       </button>
 
+
     </form>
+
+
+    <!-- =========================
+         DEMO ACCOUNT
+    ========================== -->
 
     <div class="demo-hint">
 
@@ -89,9 +145,62 @@
 
     </div>
 
+
   </main>
 
+
+  <!-- =========================
+       APP JS
+  ========================== -->
+
   <script src="js/app.js"></script>
+
+
+  <!-- =========================
+       PASSWORD SHOW / HIDE
+  ========================== -->
+
+  <script>
+
+    const passwordInput =
+      document.getElementById('password');
+
+    const passwordToggle =
+      document.getElementById('passwordToggle');
+
+
+    passwordToggle.addEventListener(
+      'click',
+      () => {
+
+        const isPassword =
+          passwordInput.type === 'password';
+
+
+        passwordInput.type =
+          isPassword
+            ? 'text'
+            : 'password';
+
+
+        passwordToggle.textContent =
+          isPassword
+            ? '🙈'
+            : '👁';
+
+
+        passwordToggle.setAttribute(
+          'aria-label',
+          isPassword
+            ? 'ซ่อนรหัสผ่าน'
+            : 'แสดงรหัสผ่าน'
+        );
+
+      }
+    );
+
+  </script>
+
 
 </body>
 
