@@ -1,42 +1,42 @@
-const API='/api';
+const API = '/api';
 
-const token=()=>sessionStorage.getItem('studly_token');
+const token = () => sessionStorage.getItem('studly_token');
 
 
-/* =========================
+/* =========================================================
    API
-========================= */
+========================================================= */
 
-async function api(path,opts={}){
+async function api(path, opts = {}) {
 
-  const headers=opts.headers||{};
+  const headers = opts.headers || {};
 
-  if(token()){
-    headers.Authorization='Bearer '+token();
+  if (token()) {
+    headers.Authorization = 'Bearer ' + token();
   }
 
-  if(
+  if (
     opts.body &&
     !(opts.body instanceof FormData)
-  ){
-    headers['Content-Type']='application/json';
+  ) {
+    headers['Content-Type'] = 'application/json';
   }
 
-  const r=await fetch(
-    API+path,
+  const r = await fetch(
+    API + path,
     {
       ...opts,
       headers
     }
   );
 
-  let d={};
+  let d = {};
 
-  try{
-    d=await r.json();
-  }catch{}
+  try {
+    d = await r.json();
+  } catch {}
 
-  if(!r.ok){
+  if (!r.ok) {
     throw new Error(
       d.error || 'เกิดข้อผิดพลาด'
     );
@@ -46,50 +46,49 @@ async function api(path,opts={}){
 }
 
 
-/* =========================
+/* =========================================================
    TOAST
-========================= */
+========================================================= */
 
-function toast(msg,ok=false){
+function toast(msg, ok = false) {
 
-  const el=
-    document.getElementById('toast');
+  const el = document.getElementById('toast');
 
-  if(el){
+  if (!el) return;
 
-    el.textContent=msg;
+  el.textContent = msg;
 
-    el.style.color=
-      ok
-        ? '#16a34a'
-        : '#dc2626';
+  el.style.color =
+    ok
+      ? '#16a34a'
+      : '#dc2626';
 
-    setTimeout(
-      ()=>el.textContent='',
-      3500
-    );
-
-  }
-
+  setTimeout(
+    () => {
+      el.textContent = '';
+    },
+    3500
+  );
 }
 
 
-/* =========================
+/* =========================================================
    LOGIN
-========================= */
+========================================================= */
 
-async function login(e){
+async function login(e) {
 
   e.preventDefault();
 
-  try{
+  try {
 
-    const d=await api(
+    const d = await api(
       '/auth/login',
       {
-        method:'POST',
+        method: 'POST',
 
-        body:JSON.stringify({
+        body: JSON.stringify({
+
           email:
             document.getElementById(
               'email'
@@ -99,6 +98,7 @@ async function login(e){
             document.getElementById(
               'password'
             ).value
+
         })
       }
     );
@@ -108,12 +108,12 @@ async function login(e){
       d.token
     );
 
-    location.href=
-      d.user.role==='student'
+    location.href =
+      d.user.role === 'student'
         ? 'student.html'
         : 'teacher.html';
 
-  }catch(err){
+  } catch (err) {
 
     toast(err.message);
 
@@ -122,11 +122,9 @@ async function login(e){
 }
 
 
-if(
-  document.getElementById(
-    'loginForm'
-  )
-){
+if (
+  document.getElementById('loginForm')
+) {
 
   document
     .getElementById('loginForm')
@@ -138,119 +136,116 @@ if(
 }
 
 
-/* =========================
+/* =========================================================
    GUARD
-========================= */
+========================================================= */
 
-async function guard(role){
+async function guard(role) {
 
-  try{
+  try {
 
-    const d=await api('/me');
+    const d = await api('/me');
 
-    if(d.user.role!==role){
+    if (d.user.role !== role) {
 
-      location.href=
-        d.user.role==='student'
+      location.href =
+        d.user.role === 'student'
           ? 'student.html'
           : 'teacher.html';
 
       return null;
-
     }
 
     return d.user;
 
-  }catch(e){
+  } catch (e) {
 
-    location.href='index.html';
+    location.href = 'index.html';
 
     return null;
-
   }
 
 }
 
 
-/* =========================
+/* =========================================================
    LOGOUT
-========================= */
+========================================================= */
 
-async function logout(){
+async function logout() {
 
   await api(
     '/auth/logout',
     {
-      method:'POST'
+      method: 'POST'
     }
-  ).catch(()=>{});
+  ).catch(() => {});
 
   sessionStorage.removeItem(
     'studly_token'
   );
 
-  location.href='index.html';
-
+  location.href = 'index.html';
 }
 
 
-/* =========================
+/* =========================================================
    ESCAPE HTML
-========================= */
+========================================================= */
 
-function esc(x){
+function esc(x) {
 
-  return String(x??'')
+  return String(x ?? '')
     .replace(
       /[&<>'"]/g,
-      c=>({
-        '&':'&amp;',
-        '<':'&lt;',
-        '>':'&gt;',
-        "'":'&#39;',
-        '"':'&quot;'
+      c => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
       }[c])
     );
 
 }
 
 
-/* =========================
+/* =========================================================
    STATUS BADGE
-========================= */
+========================================================= */
 
-function statusBadge(s){
+function statusBadge(s) {
 
-  const m={
+  const m = {
 
-    GRADED:[
+    GRADED: [
       '🟢 ตรวจและให้คะแนนเรียบร้อย',
       'b-green'
     ],
 
-    SUBMITTED:[
+    SUBMITTED: [
       '🔵 ส่งแล้ว รออาจารย์ตรวจ',
       'b-blue'
     ],
 
-    NOT_SUBMITTED:[
+    NOT_SUBMITTED: [
       '⚪ ยังไม่ได้ส่ง',
       'b-gray'
     ],
 
-    OVERDUE:[
+    OVERDUE: [
       '🔴 เลยกำหนด',
       'b-red'
     ],
 
-    NOT_RECEIVED:[
+    NOT_RECEIVED: [
       '⚫ ไม่ได้รับงาน',
       'b-gray'
     ]
 
   };
 
-  const x=
+  const x =
     m[s] ||
     [
       s,
@@ -262,55 +257,53 @@ function statusBadge(s){
       ${x[0]}
     </span>
   `;
-
 }
 
 
-/* =========================
+/* =========================================================
    FILE
-========================= */
+========================================================= */
 
-async function fileBlob(url){
+async function fileBlob(url) {
 
-  const r=await fetch(
+  const r = await fetch(
     url,
     {
-      headers:{
+      headers: {
         Authorization:
-          'Bearer '+token()
+          'Bearer ' + token()
       }
     }
   );
 
-  if(!r.ok){
+  if (!r.ok) {
 
-    let d={};
+    let d = {};
 
-    try{
-      d=await r.json();
-    }catch{}
+    try {
+      d = await r.json();
+    } catch {}
 
     throw new Error(
       d.error ||
       'เปิดไฟล์ไม่สำเร็จ'
     );
-
   }
 
   return {
-    blob:await r.blob(),
+    blob: await r.blob(),
+
     disposition:
       r.headers.get(
         'Content-Disposition'
       ) || ''
   };
-
 }
 
 
-function fileNameFromDisposition(d){
+function fileNameFromDisposition(d) {
 
-  const m=
+  const m =
     d.match(
       /filename\*=UTF-8''([^;]+)/i
     );
@@ -318,70 +311,69 @@ function fileNameFromDisposition(d){
   return m
     ? decodeURIComponent(m[1])
     : 'file';
-
 }
 
 
-async function openFile(url){
+async function openFile(url) {
 
-  if(!url)return;
+  if (!url) return;
 
-  const w=
+  const w =
     window.open(
       'about:blank',
       '_blank'
     );
 
-  try{
+  try {
 
-    const x=
+    const x =
       await fileBlob(url);
 
-    const u=
+    const u =
       URL.createObjectURL(
         x.blob
       );
 
-    if(w){
-      w.location=u;
-    }else{
-      window.location=u;
+    if (w) {
+      w.location = u;
+    } else {
+      window.location = u;
     }
 
     setTimeout(
-      ()=>URL.revokeObjectURL(u),
+      () => URL.revokeObjectURL(u),
       60000
     );
 
-  }catch(e){
+  } catch (e) {
 
-    if(w)w.close();
+    if (w) {
+      w.close();
+    }
 
     toast(e.message);
-
   }
-
 }
 
 
-async function downloadFile(url){
+async function downloadFile(url) {
 
-  try{
+  try {
 
-    const x=
+    const x =
       await fileBlob(url);
 
-    const u=
+    const u =
       URL.createObjectURL(
         x.blob
       );
 
-    const a=
+    const a =
       document.createElement('a');
 
-    a.href=u;
+    a.href = u;
 
-    a.download=
+    a.download =
       fileNameFromDisposition(
         x.disposition
       );
@@ -393,33 +385,139 @@ async function downloadFile(url){
     a.remove();
 
     setTimeout(
-      ()=>URL.revokeObjectURL(u),
+      () => URL.revokeObjectURL(u),
       1000
     );
 
-  }catch(e){
+  } catch (e) {
 
     toast(e.message);
-
   }
-
 }
 
 
-/* =========================
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+/*
+   เปิด Sidebar
+*/
+function openSidebar() {
+
+  document.body.classList.add(
+    'sidebar-open'
+  );
+
+  const toggle =
+    document.getElementById(
+      'menuToggle'
+    );
+
+  if (toggle) {
+
+    toggle.textContent = '✕';
+
+    toggle.setAttribute(
+      'aria-label',
+      'ปิดเมนู'
+    );
+
+  }
+}
+
+
+/*
+   ปิด Sidebar
+*/
+function closeSidebar() {
+
+  document.body.classList.remove(
+    'sidebar-open'
+  );
+
+  const toggle =
+    document.getElementById(
+      'menuToggle'
+    );
+
+  if (toggle) {
+
+    toggle.textContent = '☰';
+
+    toggle.setAttribute(
+      'aria-label',
+      'เปิดเมนู'
+    );
+
+  }
+}
+
+
+/*
+   เปิด / ปิด Sidebar
+*/
+function toggleSidebar() {
+
+  if (
+    document.body.classList.contains(
+      'sidebar-open'
+    )
+  ) {
+
+    closeSidebar();
+
+  } else {
+
+    openSidebar();
+
+  }
+}
+
+
+/* =========================================================
    SHELL
    สร้าง Sidebar + Main App
-========================= */
+========================================================= */
 
-function shell(user,role){
+function shell(user, role) {
 
   document.getElementById(
     'app'
-  ).innerHTML=`
+  ).innerHTML = `
+
+    <!-- Mobile Sidebar Toggle -->
+
+    <button
+      id="menuToggle"
+      class="sidebar-toggle"
+      type="button"
+      aria-label="เปิดเมนู"
+      aria-expanded="false"
+    >
+      ☰
+    </button>
+
+
+    <!-- Sidebar Overlay -->
+
+    <div
+      id="sidebarOverlay"
+      class="sidebar-overlay"
+    ></div>
+
 
     <div class="shell">
 
-      <aside class="sidebar">
+
+      <!-- =========================
+           SIDEBAR
+      ========================= -->
+
+      <aside
+        class="sidebar"
+        id="sidebar"
+      >
 
         <div class="brand">
 
@@ -431,6 +529,7 @@ function shell(user,role){
 
         </div>
 
+
         <div
           class="nav"
           id="nav"
@@ -438,6 +537,10 @@ function shell(user,role){
 
       </aside>
 
+
+      <!-- =========================
+           MAIN
+      ========================= -->
 
       <main class="main">
 
@@ -463,7 +566,7 @@ function shell(user,role){
             ·
 
             ${
-              role==='student'
+              role === 'student'
                 ? 'นักเรียน'
                 : 'ครู'
             }
@@ -489,91 +592,100 @@ function shell(user,role){
   `;
 
 
-  /* =========================
+  /* =======================================================
      SIDEBAR TOGGLE
-  ========================= */
+  ======================================================= */
 
-  const toggle=
+  const toggle =
     document.getElementById(
       'menuToggle'
     );
 
-  const overlay=
+  const overlay =
     document.getElementById(
       'sidebarOverlay'
     );
 
 
-  if(toggle){
+  /*
+     ปุ่ม ☰
+  */
 
-    toggle.onclick=()=>{
+  if (toggle) {
 
-      document.body.classList.toggle(
-        'sidebar-open'
-      );
-
-      const opened=
-        document.body.classList.contains(
-          'sidebar-open'
-        );
-
-      toggle.textContent=
-        opened
-          ? '✕'
-          : '☰';
-
-    };
-
-  }
-
-
-  if(overlay){
-
-    overlay.onclick=()=>{
-
-      document.body.classList.remove(
-        'sidebar-open'
-      );
-
-      if(toggle){
-
-        toggle.textContent='☰';
-
-      }
-
-    };
-
-  }
-
-
-  /* =========================
-     ปิด Sidebar เมื่อเลือกเมนู
-     บนมือถือ
-  ========================= */
-
-  const nav=
-    document.getElementById('nav');
-
-  if(nav){
-
-    nav.addEventListener(
+    toggle.addEventListener(
       'click',
-      event=>{
+      () => {
 
-        if(
-          window.innerWidth<=900 &&
-          event.target.closest('button')
-        ){
+        toggleSidebar();
 
-          document.body.classList.remove(
+        const opened =
+          document.body.classList.contains(
             'sidebar-open'
           );
 
-          if(toggle){
+        toggle.setAttribute(
+          'aria-expanded',
+          opened
+            ? 'true'
+            : 'false'
+        );
 
-            toggle.textContent='☰';
+      }
+    );
 
-          }
+  }
+
+
+  /*
+     คลิกพื้นที่ด้านนอก Sidebar
+     = ปิด Sidebar
+  */
+
+  if (overlay) {
+
+    overlay.addEventListener(
+      'click',
+      closeSidebar
+    );
+
+  }
+
+
+  /* =======================================================
+     NAVIGATION
+  ======================================================= */
+
+  const nav =
+    document.getElementById(
+      'nav'
+    );
+
+
+  if (nav) {
+
+    nav.addEventListener(
+      'click',
+      event => {
+
+        const button =
+          event.target.closest(
+            'button'
+          );
+
+        if (!button) return;
+
+
+        /*
+           บนมือถือ/แท็บเล็ต
+           เมื่อกดเมนูแล้วให้ Sidebar ปิด
+        */
+
+        if (
+          window.innerWidth <= 900
+        ) {
+
+          closeSidebar();
 
         }
 
@@ -582,34 +694,63 @@ function shell(user,role){
 
   }
 
+
+  /* =======================================================
+     RESET SIDEBAR
+     เมื่อโหลดหน้าใหม่
+  ======================================================= */
+
+  closeSidebar();
+
 }
 
 
-/* =========================
-   RESPONSIVE SIDEBAR
+/* =========================================================
+   RESPONSIVE
    เมื่อเปลี่ยนขนาดหน้าจอ
-========================= */
+========================================================= */
 
 window.addEventListener(
   'resize',
-  ()=>{
+  () => {
 
-    const toggle=
-      document.getElementById(
-        'menuToggle'
-      );
+    /*
+       ถ้ากลับมาเป็น Desktop
+       ให้ปิดสถานะ Mobile Sidebar
+    */
 
-    if(
-      window.innerWidth>900
-    ){
+    if (
+      window.innerWidth > 900
+    ) {
 
-      document.body.classList.remove(
-        'sidebar-open'
-      );
+      closeSidebar();
 
-      if(toggle){
+    }
 
-        toggle.textContent='☰';
+  }
+);
+
+
+/* =========================================================
+   ESC KEY
+   กด ESC เพื่อปิด Sidebar
+========================================================= */
+
+document.addEventListener(
+  'keydown',
+  event => {
+
+    if (
+      event.key === 'Escape'
+    ) {
+
+      if (
+        document.body.classList.contains(
+          'sidebar-open'
+        )
+      ) {
+
+        closeSidebar();
 
       }
 
@@ -619,24 +760,36 @@ window.addEventListener(
 );
 
 
-/* =========================
+/* =========================================================
    EXPORT
-========================= */
+========================================================= */
 
-window.api=api;
+window.api = api;
 
-window.guard=guard;
+window.guard = guard;
 
-window.logout=logout;
+window.logout = logout;
 
-window.toast=toast;
+window.toast = toast;
 
-window.esc=esc;
+window.esc = esc;
 
-window.statusBadge=statusBadge;
+window.statusBadge =
+  statusBadge;
 
-window.shell=shell;
+window.shell = shell;
 
-window.openFile=openFile;
+window.openFile =
+  openFile;
 
-window.downloadFile=downloadFile;
+window.downloadFile =
+  downloadFile;
+
+window.openSidebar =
+  openSidebar;
+
+window.closeSidebar =
+  closeSidebar;
+
+window.toggleSidebar =
+  toggleSidebar;
