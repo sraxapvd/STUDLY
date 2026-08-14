@@ -5,9 +5,9 @@ const { sessionUser } = require('./api');
 
 const router = express.Router();
 
-/* =========================
+/* =====================================================
    VERIFY LINE SIGNATURE
-========================= */
+===================================================== */
 
 function verifySignature(req) {
   const secret = process.env.LINE_CHANNEL_SECRET;
@@ -32,15 +32,17 @@ function verifySignature(req) {
   );
 }
 
-/* =========================
+/* =====================================================
    LINE PUSH MESSAGE
-========================= */
+===================================================== */
 
 async function linePush(to, messages) {
   const token = process.env.LINE_CHANNEL_ACCESS_TOKEN;
 
   if (!token) {
-    throw new Error('ยังไม่ได้ตั้งค่า LINE_CHANNEL_ACCESS_TOKEN');
+    throw new Error(
+      'ยังไม่ได้ตั้งค่า LINE_CHANNEL_ACCESS_TOKEN'
+    );
   }
 
   const response = await fetch(
@@ -60,29 +62,66 @@ async function linePush(to, messages) {
 
   if (!response.ok) {
     const body = await response.text();
-    throw new Error(`LINE API ${response.status}: ${body}`);
+
+    throw new Error(
+      `LINE API ${response.status}: ${body}`
+    );
   }
 
   return true;
 }
 
-/* =========================
+/* =====================================================
+   GET CURRENT STUDENT
+===================================================== */
+
+function getStudentFromRequest(req) {
+  const token =
+    (req.headers.authorization || '')
+      .replace('Bearer ', '');
+
+  const user = sessionUser(token);
+
+  if (!user || user.role !== 'student') {
+    return null;
+  }
+
+  return user;
+}
+
+/* =====================================================
+   GET CONNECTED PARENT
+===================================================== */
+
+function getConnectedParent(studentId) {
+  const db = store.read();
+
+  return db.parentConnections.find(
+    item =>
+      item.studentId === studentId &&
+      item.status === 'CONNECTED'
+  );
+}
+
+/* =====================================================
    LINE WEBHOOK
-========================= */
+===================================================== */
 
 router.post('/webhook', async (req, res) => {
 
   /*
-   * ตรวจสอบว่า Webhook มาจาก LINE จริง
+   * LINE ต้องได้รับ HTTP 200 อย่างรวดเร็ว
    */
   if (!verifySignature(req)) {
-    console.error('LINE webhook: invalid signature');
-    return res.status(401).send('invalid signature');
+    console.error(
+      'LINE webhook: invalid signature'
+    );
+
+    return res
+      .status(401)
+      .send('invalid signature');
   }
 
-  /*
-   * ตอบ LINE ก่อน เพื่อไม่ให้ Webhook timeout
-   */
   res.status(200).json({
     ok: true
   });
@@ -91,39 +130,46 @@ router.post('/webhook', async (req, res) => {
 
     for (const event of req.body.events || []) {
 
-      /* =========================
+      const lineUserId =
+        event.source?.userId;
+
+      if (!lineUserId) {
+        continue;
+      }
+
+      /* =================================================
          TEXT MESSAGE
-      ========================= */
+      ================================================= */
 
       if (
         event.type === 'message' &&
         event.message?.type === 'text'
       ) {
 
-        const text = event.message.text.trim();
+        const text =
+          event.message.text.trim();
 
         const db = store.read();
 
-        /*
-         * ตรวจ Link Code
-         */
+        /* ===============================================
+           LINK CODE
+        =============================================== */
 
-        const code = db.linkCodes.find(
-          item =>
-            item.code === text &&
-            !item.used &&
-            new Date(item.expiresAt) > new Date()
-        );
-
-        /* =========================
-           LINK CODE FOUND
-        ========================= */
+        const code =
+          db.linkCodes.find(
+            item =>
+              item.code === text &&
+              !item.used &&
+              new Date(item.expiresAt) > new Date()
+          );
 
         if (code) {
 
-          const student = db.users.find(
-            user => user.id === code.studentId
-          );
+          const student =
+            db.users.find(
+              user =>
+                user.id === code.studentId
+            );
 
           if (!student) {
             continue;
@@ -133,7 +179,8 @@ router.post('/webhook', async (req, res) => {
 
             const currentCode =
               data.linkCodes.find(
-                item => item.code === code.code
+                item =>
+                  item.code === code.code
               );
 
             if (currentCode) {
@@ -142,59 +189,72 @@ router.post('/webhook', async (req, res) => {
 
             data.parentConnections =
               data.parentConnections.filter(
-                item => item.studentId !== student.id
+                item =>
+                  item.studentId !== student.id
               );
 
             data.parentConnections.push({
               studentId: student.id,
-              lineUserId: event.source.userId,
-              connectedAt: new Date().toISOString(),
+              lineUserId,
+              connectedAt:
+                new Date().toISOString(),
               relationship: 'parent',
-              status: 'PENDING_CONFIRMATION'
+              status:
+                'PENDING_CONFIRMATION'
             });
 
             return data;
           });
 
-          /*
-           * ส่งข้อความยืนยันให้ผู้ปกครอง
-           */
-
           await linePush(
-            event.source.userId,
+            lineUserId,
             [
               {
                 type: 'template',
-                altText: 'ยืนยันการเชื่อมต่อ STUDLY',
+                altText:
+                  'ยืนยันการเชื่อมต่อ STUDLY',
+
                 template: {
                   type: 'confirm',
+
                   text:
-                    `พบคำขอเชื่อมต่อกับบัญชีของ ${student.name} ต้องการเชื่อมต่อเป็นผู้ปกครองหรือไม่?`,
+                    `พบคำขอเชื่อมต่อกับบัญชีของ ${student.name} ` +
+                    `ต้องการเชื่อมต่อเป็นผู้ปกครองหรือไม่?`,
+
                   actions: [
                     {
                       type: 'postback',
-                      label: 'ยืนยันการเชื่อมต่อ',
-                      data: `confirm:${student.id}`
+                      label:
+                        'ยืนยันการเชื่อมต่อ',
+
+                      data:
+                        `confirm:${student.id}`
                     },
+
                     {
-                      type: 'message',
+                      type: 'postback',
                       label: 'ยกเลิก',
-                      text: 'ยกเลิกการเชื่อมต่อ'
+
+                      data:
+                        `cancel_connect:${student.id}`
                     }
                   ]
                 }
               }
             ]
           );
+
+          continue;
         }
 
-        /* =========================
-           CONFIRM TEXT
-        ========================= */
+        /* ===============================================
+           TEXT CONFIRM CONNECT
+        =============================================== */
 
-        else if (text.startsWith('confirm:')) {
+        if (text.startsWith('confirm:')) {
 
-          const studentId = text.split(':')[1];
+          const studentId =
+            text.split(':')[1];
 
           store.update(data => {
 
@@ -202,65 +262,247 @@ router.post('/webhook', async (req, res) => {
               data.parentConnections.find(
                 item =>
                   item.studentId === studentId &&
-                  item.lineUserId === event.source.userId
+                  item.lineUserId === lineUserId
               );
 
             if (connection) {
-              connection.status = 'CONNECTED';
+              connection.status =
+                'CONNECTED';
+
+              connection.connectedAt =
+                connection.connectedAt ||
+                new Date().toISOString();
             }
 
             return data;
           });
 
           await linePush(
-            event.source.userId,
+            lineUserId,
             [
               {
                 type: 'text',
-                text: '🟢 เชื่อมต่อ STUDLY สำเร็จแล้ว'
+                text:
+                  '🟢 เชื่อมต่อ STUDLY สำเร็จแล้ว'
               }
             ]
           );
+
+          continue;
+        }
+
+        /* ===============================================
+           TEXT CANCEL CONNECT
+        =============================================== */
+
+        if (text.startsWith('cancel_connect:')) {
+
+          const studentId =
+            text.split(':')[1];
+
+          store.update(data => {
+
+            const connection =
+              data.parentConnections.find(
+                item =>
+                  item.studentId === studentId &&
+                  item.lineUserId === lineUserId
+              );
+
+            if (connection) {
+              connection.status =
+                'DISCONNECTED';
+            }
+
+            return data;
+          });
+
+          await linePush(
+            lineUserId,
+            [
+              {
+                type: 'text',
+                text:
+                  'ยกเลิกการเชื่อมต่อ STUDLY แล้ว'
+              }
+            ]
+          );
+
+          continue;
         }
       }
 
-      /* =========================
-         POSTBACK CONFIRM
-      ========================= */
+      /* =================================================
+         POSTBACK
+      ================================================= */
 
       if (
         event.type === 'postback' &&
-        event.postback?.data?.startsWith('confirm:')
+        event.postback?.data
       ) {
 
-        const studentId =
-          event.postback.data.split(':')[1];
+        const data =
+          event.postback.data;
 
-        store.update(data => {
+        /* ===============================================
+           CONFIRM CONNECTION
+        =============================================== */
 
-          const connection =
-            data.parentConnections.find(
-              item =>
-                item.studentId === studentId &&
-                item.lineUserId === event.source.userId
-            );
+        if (
+          data.startsWith('confirm:')
+        ) {
 
-          if (connection) {
-            connection.status = 'CONNECTED';
-          }
+          const studentId =
+            data.split(':')[1];
 
-          return data;
-        });
+          store.update(db => {
 
-        await linePush(
-          event.source.userId,
-          [
-            {
-              type: 'text',
-              text: '🟢 เชื่อมต่อ STUDLY สำเร็จแล้ว'
+            const connection =
+              db.parentConnections.find(
+                item =>
+                  item.studentId === studentId &&
+                  item.lineUserId === lineUserId
+              );
+
+            if (connection) {
+              connection.status =
+                'CONNECTED';
+
+              connection.connectedAt =
+                connection.connectedAt ||
+                new Date().toISOString();
             }
-          ]
-        );
+
+            return db;
+          });
+
+          await linePush(
+            lineUserId,
+            [
+              {
+                type: 'text',
+                text:
+                  '🟢 เชื่อมต่อ STUDLY สำเร็จแล้ว'
+              }
+            ]
+          );
+
+          continue;
+        }
+
+        /* ===============================================
+           CANCEL CONNECTION
+        =============================================== */
+
+        if (
+          data.startsWith('cancel_connect:')
+        ) {
+
+          const studentId =
+            data.split(':')[1];
+
+          store.update(db => {
+
+            const connection =
+              db.parentConnections.find(
+                item =>
+                  item.studentId === studentId &&
+                  item.lineUserId === lineUserId
+              );
+
+            if (connection) {
+              connection.status =
+                'DISCONNECTED';
+            }
+
+            return db;
+          });
+
+          await linePush(
+            lineUserId,
+            [
+              {
+                type: 'text',
+                text:
+                  'ยกเลิกการเชื่อมต่อ STUDLY แล้ว'
+              }
+            ]
+          );
+
+          continue;
+        }
+
+        /* ===============================================
+           DISCONNECT CONFIRM
+        =============================================== */
+
+        if (
+          data.startsWith(
+            'disconnect_confirm:'
+          )
+        ) {
+
+          const studentId =
+            data.split(':')[1];
+
+          store.update(db => {
+
+            const connection =
+              db.parentConnections.find(
+                item =>
+                  item.studentId === studentId &&
+                  item.lineUserId === lineUserId
+              );
+
+            if (connection) {
+
+              connection.status =
+                'DISCONNECTED';
+
+              connection.disconnectedAt =
+                new Date().toISOString();
+            }
+
+            return db;
+          });
+
+          await linePush(
+            lineUserId,
+            [
+              {
+                type: 'text',
+                text:
+                  '🔴 ยกเลิกการเชื่อมต่อ STUDLY เรียบร้อยแล้ว'
+              }
+            ]
+          );
+
+          continue;
+        }
+
+        /* ===============================================
+           DISCONNECT CANCEL
+        =============================================== */
+
+        if (
+          data.startsWith(
+            'disconnect_cancel:'
+          )
+        ) {
+
+          await linePush(
+            lineUserId,
+            [
+              {
+                type: 'text',
+                text:
+                  '🟢 ยังคงเชื่อมต่อ STUDLY อยู่'
+              }
+            ]
+          );
+
+          continue;
+        }
       }
     }
 
@@ -270,80 +512,139 @@ router.post('/webhook', async (req, res) => {
       'LINE webhook processing error:',
       error
     );
-
   }
 });
 
-/* =========================
+/* =====================================================
    SEND TEST MESSAGE
-========================= */
+===================================================== */
 
-router.post('/send-message', async (req, res) => {
+router.post(
+  '/send-message',
+  async (req, res) => {
 
-  const token =
-    (req.headers.authorization || '')
-      .replace('Bearer ', '');
+    const user =
+      getStudentFromRequest(req);
 
-  const user = sessionUser(token);
+    if (!user) {
+      return res.status(403).json({
+        error: 'ไม่มีสิทธิ์'
+      });
+    }
 
-  if (!user || user.role !== 'student') {
-    return res.status(403).json({
-      error: 'ไม่มีสิทธิ์'
-    });
+    const connection =
+      getConnectedParent(user.id);
+
+    if (!connection) {
+      return res.status(400).json({
+        error:
+          'ยังไม่ได้เชื่อมต่อ LINE ผู้ปกครอง'
+      });
+    }
+
+    try {
+
+      await linePush(
+        connection.lineUserId,
+        [
+          {
+            type: 'text',
+            text:
+              '🎓 STUDLY\n' +
+              'นี่คือข้อความทดสอบจากระบบ STUDLY\n' +
+              'การเชื่อมต่อ LINE สำเร็จแล้ว'
+          }
+        ]
+      );
+
+      return res.json({
+        ok: true,
+        message:
+          'ส่งข้อความทดสอบสำเร็จ'
+      });
+
+    } catch (error) {
+
+      console.error(
+        'LINE test message error:',
+        error
+      );
+
+      return res.status(500).json({
+        error:
+          'ไม่สามารถส่งข้อความได้ กรุณาตรวจสอบการตั้งค่า LINE'
+      });
+    }
   }
+);
 
-  const db = store.read();
+/* =====================================================
+   TEST MESSAGE ALIAS
+   รองรับ Frontend ที่เรียก /test-message
+===================================================== */
 
-  const connection =
-    db.parentConnections.find(
-      item =>
-        item.studentId === user.id &&
-        item.status === 'CONNECTED'
-    );
+router.post(
+  '/test-message',
+  async (req, res) => {
 
-  if (!connection) {
-    return res.status(400).json({
-      error: 'ยังไม่ได้เชื่อมต่อ LINE ผู้ปกครอง'
-    });
+    const user =
+      getStudentFromRequest(req);
+
+    if (!user) {
+      return res.status(403).json({
+        error: 'ไม่มีสิทธิ์'
+      });
+    }
+
+    const connection =
+      getConnectedParent(user.id);
+
+    if (!connection) {
+      return res.status(400).json({
+        error:
+          'ยังไม่ได้เชื่อมต่อ LINE ผู้ปกครอง'
+      });
+    }
+
+    try {
+
+      await linePush(
+        connection.lineUserId,
+        [
+          {
+            type: 'text',
+            text:
+              '🎓 STUDLY\n' +
+              'นี่คือข้อความทดสอบจากระบบ STUDLY\n' +
+              'การเชื่อมต่อ LINE สำเร็จแล้ว'
+          }
+        ]
+      );
+
+      return res.json({
+        ok: true,
+        message:
+          'ส่งข้อความทดสอบสำเร็จ'
+      });
+
+    } catch (error) {
+
+      console.error(
+        'LINE test-message error:',
+        error
+      );
+
+      return res.status(500).json({
+        error:
+          'ไม่สามารถส่งข้อความได้ กรุณาตรวจสอบการตั้งค่า LINE'
+      });
+    }
   }
+);
 
-  try {
-
-    await linePush(
-      connection.lineUserId,
-      [
-        {
-          type: 'text',
-          text:
-            '🎓 STUDLY\n' +
-            'นี่คือข้อความทดสอบจากระบบ STUDLY\n' +
-            'การเชื่อมต่อ LINE สำเร็จแล้ว'
-        }
-      ]
-    );
-
-    res.json({
-      ok: true,
-      message: 'ส่งข้อความทดสอบสำเร็จ'
-    });
-
-  } catch (error) {
-
-    console.error(
-      'LINE test message error:',
-      error
-    );
-
-    res.status(500).json({
-      error:
-        'ไม่สามารถส่งข้อความได้ กรุณาตรวจสอบการตั้งค่า LINE'
-    });
-  }
-});
-
-/* =========================
+/* =====================================================
    SMART ALERT
-========================= */
+===================================================== */
 
 async function sendSmartAlert(studentId) {
 
@@ -357,13 +658,28 @@ async function sendSmartAlert(studentId) {
     );
 
   if (!connection) {
-    throw new Error('No connected parent');
+    throw new Error(
+      'No connected parent'
+    );
   }
+
+  const student =
+    db.users.find(
+      user =>
+        user.id === studentId
+    );
 
   const physics =
     db.subjects.find(
-      subject => subject.name === 'Physics'
+      subject =>
+        subject.name === 'Physics'
     );
+
+  const studentName =
+    student?.name || 'สมชาย ใจดี';
+
+  const score =
+    physics?.score ?? 42;
 
   await linePush(
     connection.lineUserId,
@@ -372,56 +688,152 @@ async function sendSmartAlert(studentId) {
         type: 'text',
         text:
           `🔴 STUDLY Smart Alert\n` +
-          `แจ้งเตือนการเรียนของน้องสมชาย\n` +
-          `Physics มีความเสี่ยงสูง\n` +
-          `คะแนนปัจจุบัน: ${physics?.score || 42}%\n` +
-          `งานสำคัญใกล้ Deadline: 1 งาน\n` +
+          `แจ้งเตือนการเรียนของ${studentName}\n\n` +
+          `Physics มีความเสี่ยงสูง 🔴\n` +
+          `• คะแนนปัจจุบัน: ${score}%\n` +
+          `• งานสำคัญใกล้ Deadline: 1 งาน\n\n` +
           `แนะนำให้ช่วยน้องวางแผนการทำงาน`
       }
     ]
   );
 }
 
-/* =========================
+/* =====================================================
    SMART ALERT API
-========================= */
+===================================================== */
 
-router.post('/smart-alert', async (req, res) => {
+router.post(
+  '/smart-alert',
+  async (req, res) => {
 
-  const token =
-    (req.headers.authorization || '')
-      .replace('Bearer ', '');
+    const user =
+      getStudentFromRequest(req);
 
-  const user = sessionUser(token);
+    if (!user) {
+      return res.status(403).json({
+        error: 'ไม่มีสิทธิ์'
+      });
+    }
 
-  if (!user || user.role !== 'student') {
-    return res.status(403).json({
-      error: 'ไม่มีสิทธิ์'
-    });
+    try {
+
+      await sendSmartAlert(user.id);
+
+      return res.json({
+        ok: true,
+        message:
+          'ส่ง Smart Alert สำเร็จ'
+      });
+
+    } catch (error) {
+
+      console.error(
+        'LINE Smart Alert error:',
+        error
+      );
+
+      return res.status(500).json({
+        error:
+          'ไม่สามารถส่ง Smart Alert ได้ กรุณาตรวจสอบการตั้งค่า LINE'
+      });
+    }
   }
+);
 
-  try {
+/* =====================================================
+   REQUEST DISCONNECT
+   นักเรียนกดปุ่มยกเลิก
+   แต่ยังไม่ตัดทันที
+===================================================== */
 
-    await sendSmartAlert(user.id);
+router.post(
+  '/disconnect',
+  async (req, res) => {
 
-    res.json({
-      ok: true,
-      message: 'ส่ง Smart Alert สำเร็จ'
-    });
+    const user =
+      getStudentFromRequest(req);
 
-  } catch (error) {
+    if (!user) {
+      return res.status(403).json({
+        error: 'ไม่มีสิทธิ์'
+      });
+    }
 
-    console.error(
-      'LINE Smart Alert error:',
-      error
-    );
+    const connection =
+      getConnectedParent(user.id);
 
-    res.status(500).json({
-      error:
-        'ไม่สามารถส่ง Smart Alert ได้ กรุณาตรวจสอบการตั้งค่า LINE'
-    });
+    if (!connection) {
+      return res.status(400).json({
+        error:
+          'ยังไม่ได้เชื่อมต่อ LINE ผู้ปกครอง'
+      });
+    }
+
+    try {
+
+      await linePush(
+        connection.lineUserId,
+        [
+          {
+            type: 'template',
+
+            altText:
+              'ยืนยันการยกเลิกการเชื่อมต่อ STUDLY',
+
+            template: {
+              type: 'confirm',
+
+              text:
+                'ต้องการยกเลิกการเชื่อมต่อ STUDLY กับบัญชีนักเรียนนี้หรือไม่?',
+
+              actions: [
+                {
+                  type: 'postback',
+                  label:
+                    'ยืนยันยกเลิก',
+
+                  data:
+                    `disconnect_confirm:${user.id}`
+                },
+
+                {
+                  type: 'postback',
+                  label:
+                    'ยกเลิก',
+
+                  data:
+                    `disconnect_cancel:${user.id}`
+                }
+              ]
+            }
+          }
+        ]
+      );
+
+      return res.json({
+        ok: true,
+        message:
+          'ส่งคำขอยืนยันการยกเลิกไปยัง LINE ผู้ปกครองแล้ว'
+      });
+
+    } catch (error) {
+
+      console.error(
+        'LINE disconnect request error:',
+        error
+      );
+
+      return res.status(500).json({
+        error:
+          'ไม่สามารถส่งคำขอยืนยันการยกเลิกได้'
+      });
+    }
   }
-});
+);
+
+/* =====================================================
+   EXPORT
+===================================================== */
 
 module.exports = {
   router
