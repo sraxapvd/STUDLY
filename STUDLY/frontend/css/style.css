@@ -43,11 +43,22 @@ button{
   min-height:100vh;
   display:grid;
   place-items:center;
+  padding:20px;
   background:
-    radial-gradient(circle at 20% 20%,#ddd6fe,transparent 35%),
-    radial-gradient(circle at 80% 80%,#bfdbfe,transparent 30%),
+    radial-gradient(
+      circle at 20% 20%,
+      #ddd6fe,
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      #bfdbfe,
+      transparent 30%
+    ),
     #f8fafc;
 }
+
+/* Login Card */
 
 .login-card{
   width:min(430px,92vw);
@@ -58,26 +69,50 @@ button{
   text-align:center;
 }
 
+/* =========================
+   LOGIN LOGO IMAGE
+========================= */
+
+.logo-image{
+  width:50px;
+  height:50px;
+  object-fit:contain;
+  display:block;
+  margin:0 auto 12px;
+}
+
+/*
+   เผื่อกรณีมีโลโก้แบบเดิม
+   ที่ใช้ class .logo-mark
+*/
+
 .logo-mark{
   margin:auto;
-  width:64px;
-  height:64px;
-  border-radius:20px;
-  background:linear-gradient(135deg,var(--primary),var(--purple));
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      var(--purple)
+    );
   color:white;
-  font-size:34px;
+  font-size:26px;
   font-weight:900;
   display:grid;
   place-items:center;
 }
 
 .logo-mark span{
-  font-size:14px;
-  margin-left:-5px;
+  font-size:12px;
+  margin-left:-4px;
 }
 
+/* Login Title */
+
 .login-card h1{
-  margin:16px 0 0;
+  margin:10px 0 0;
   font-size:34px;
 }
 
@@ -85,6 +120,10 @@ button{
   margin:2px 0 28px;
   color:var(--muted);
 }
+
+/* =========================
+   FORM
+========================= */
 
 label{
   text-align:left;
@@ -110,18 +149,33 @@ input:focus,
 select:focus,
 textarea:focus{
   border-color:#818cf8;
-  box-shadow:0 0 0 3px #6366f11a;
+  box-shadow:
+    0 0 0 3px #6366f11a;
 }
+
+/* Login Button */
 
 .primary{
   width:100%;
   padding:13px;
   border-radius:13px;
   color:#fff;
-  background:linear-gradient(135deg,var(--primary),var(--purple));
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      var(--purple)
+    );
   font-weight:800;
   margin-top:8px;
 }
+
+.primary:hover{
+  opacity:.95;
+  transform:translateY(-1px);
+}
+
+/* Demo Account */
 
 .demo-hint{
   margin-top:20px;
@@ -357,6 +411,10 @@ textarea:focus{
   font-size:12px;
 }
 
+.btn:hover{
+  opacity:.9;
+}
+
 .btn.green{
   background:#dcfce7;
   color:#166534;
@@ -419,7 +477,12 @@ textarea:focus{
 ========================= */
 
 .ai-card{
-  background:linear-gradient(135deg,#eef2ff,#faf5ff);
+  background:
+    linear-gradient(
+      135deg,
+      #eef2ff,
+      #faf5ff
+    );
 }
 
 .priority{
@@ -495,7 +558,7 @@ textarea:focus{
 }
 
 /* =========================
-   MOBILE / TABLET
+   RESPONSIVE
 ========================= */
 
 @media(max-width:900px){
@@ -531,6 +594,10 @@ textarea:focus{
   }
 }
 
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:600px){
 
   .cards,
@@ -542,6 +609,20 @@ textarea:focus{
     align-items:flex-start;
     gap:10px;
     flex-direction:column;
+  }
+
+  .login-card{
+    width:min(430px,94vw);
+    padding:30px 24px;
+  }
+
+  .logo-image{
+    width:48px;
+    height:48px;
+  }
+
+  .login-card h1{
+    font-size:30px;
   }
 
 }
